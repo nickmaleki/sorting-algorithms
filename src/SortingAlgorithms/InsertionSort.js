@@ -1,9 +1,9 @@
 export function getInsertionSortAnimations(array) {
-    let animations  = [];
+    let animations = [];
     let auxillaryArray = array.slice();
     insertionSort(auxillaryArray, animations);
     const javaScriptSortedArray = array.slice().sort((a, b) => a - b);
-    console.log("sort works correctly? ",arraysAreEqual(javaScriptSortedArray, auxillaryArray));
+    console.log("sort works correctly? ", arraysAreEqual(javaScriptSortedArray, auxillaryArray));
     array = auxillaryArray;
     return [animations, array];
 }
@@ -15,14 +15,14 @@ function insertionSort(auxillaryArray, animations) {
         let j = i - 1;
         animations.push(["comparision1", j, i]);
         animations.push(["comparision2", j, i]);
-        while(j >= 0 && auxillaryArray[j] > key) {
+        while (j >= 0 && auxillaryArray[j] > key) {
             animations.push(["overwrite", j + 1, auxillaryArray[j]]);
             auxillaryArray[j + 1] = auxillaryArray[j];
             j = j - 1;
-            if(j >= 0) {
+            if (j >= 0) {
                 animations.push(["comparision1", j, i]);
                 animations.push(["comparision2", j, i]);
-            }     
+            }
         }
         animations.push(["overwrite", j + 1, key]);
         auxillaryArray[j + 1] = key;
@@ -34,9 +34,9 @@ function arraysAreEqual(firstArray, secondArray) {
         return false;
     }
     for (let i = 0; i < firstArray.length; i++) {
-      if (firstArray[i] !== secondArray[i]) {
-        return false;
-      }
+        if (firstArray[i] !== secondArray[i]) {
+            return false;
+        }
     }
     return true;
 }

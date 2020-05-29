@@ -1,14 +1,15 @@
+// any random item or the first or the last item of your input can be pivot
 export function getQuickSortAnimations(array) {
-    let animations  = [];
+    let animations = [];
     let auxillaryArray = array.slice();
     quickSort(auxillaryArray, 0, auxillaryArray.length - 1, animations);
     const javaScriptSortedArray = array.slice().sort((a, b) => a - b);
-    console.log("sort works correctly? ",arraysAreEqual(javaScriptSortedArray, auxillaryArray));
+    console.log("sort works correctly? ", arraysAreEqual(javaScriptSortedArray, auxillaryArray));
     array = auxillaryArray;
     return [animations, array];
 }
 
-getQuickSortAnimations([7,2,1,6]);
+getQuickSortAnimations([7, 2, 1, 6]);
 
 function quickSort(auxillaryArray, startIndex, endIndex, animations) {
     let pivotIndex;
@@ -29,7 +30,7 @@ function partitionArray(auxillaryArray, startIndex, endIndex, animations) {
             //Swap these two heights
             animations.push([i, auxillaryArray[pivotIndex]]);
             animations.push([pivotIndex, auxillaryArray[i]]);
-            swap(auxillaryArray, i , pivotIndex);
+            swap(auxillaryArray, i, pivotIndex);
             pivotIndex++;
         }
         else {
@@ -61,9 +62,52 @@ function arraysAreEqual(firstArray, secondArray) {
         return false;
     }
     for (let i = 0; i < firstArray.length; i++) {
-      if (firstArray[i] !== secondArray[i]) {
-        return false;
-      }
+        if (firstArray[i] !== secondArray[i]) {
+            return false;
+        }
     }
     return true;
 }
+
+
+// export function getInPlaceQuickSortAnimations(array) {
+//     let animations  = [];
+//     let auxillaryArray = array.slice();
+//     quickSort(auxillaryArray, animations);
+//     const javaScriptSortedArray = array.slice().sort((a, b) => a - b);
+//     console.log("sort works correctly? ",arraysAreEqual(javaScriptSortedArray, auxillaryArray));
+//     array = auxillaryArray;
+//     return [animations, array];
+//   }
+
+//   function inPlaceQuickSort(auxillaryArray, animations){ 
+
+//   }
+
+
+//   const pivot = (arr, start = 0, end = arr.length + 1) => {
+//       const swap = (list, a, b) => [list[a], list[b]] = [list[b], list[a]];
+
+//       let pivot = arr[start],
+//           pointer = start;
+
+//       for (let i = start; i < arr.length; i++) {
+//         if (arr[i] < pivot  ) {
+//           pointer++;
+//           swap(arr, pointer, i);
+//         }
+//       };
+//       swap(arr, start, pointer);
+
+//       return pointer;
+//     }
+
+//     const quickSort = (arr, start = 0, end = arr.length) => {
+//       let pivotIndex = pivot(arr, start, end);
+
+//       if (start >= end) return arr;
+//       quickSort(arr, start, pivotIndex);
+//       quickSort(arr, pivotIndex + 1, end);
+
+//       return arr;
+//     };

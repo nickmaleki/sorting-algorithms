@@ -1,9 +1,9 @@
 export function getSelectionSortAnimations(array) {
-    let animations  = [];
+    let animations = [];
     let auxillaryArray = array.slice();
     selectionSort(auxillaryArray, animations);
     const javaScriptSortedArray = array.slice().sort((a, b) => a - b);
-    console.log("sort works correctly? ",arraysAreEqual(javaScriptSortedArray, auxillaryArray));
+    console.log("sort works correctly? ", arraysAreEqual(javaScriptSortedArray, auxillaryArray));
     array = auxillaryArray;
     return [animations, array];
 }
@@ -37,9 +37,9 @@ function arraysAreEqual(firstArray, secondArray) {
         return false;
     }
     for (let i = 0; i < firstArray.length; i++) {
-      if (firstArray[i] !== secondArray[i]) {
-        return false;
-      }
+        if (firstArray[i] !== secondArray[i]) {
+            return false;
+        }
     }
     return true;
 }

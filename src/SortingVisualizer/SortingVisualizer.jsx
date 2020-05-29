@@ -40,8 +40,9 @@ const ENABLED_BUTTON = {
     nlogn: "O(NlogN) Time Complexity",
     nSquare: "O(N^2) Time Complexity",
     plotToolTip: "Compare all algorithms for different input sizes",
-    generateArray: "Generates a new random array",
-    reverseArray: "Reverse the current array"
+    generateRandomArray: "Generates a new random unsorted array",
+    generateSortedArray: "Generates a new sorted array",
+    generateReversedArray: "Generates a new reversed array"
 }
 
 class SortingVisualizer extends React.Component {
@@ -66,9 +67,17 @@ class SortingVisualizer extends React.Component {
         this.restoreButtons();
     }
 
-    //Reverses the current array
+    //Sorts a new array
+    sortArray() {
+        this.resetArray();
+        const sorted = this.state.array.sort(function (a, b) { return a - b; }); //Adjusted sort function because sort w/o args uses string comparison, not number
+        this.setState({ array: sorted });
+    }
+
+    //Sorts and reverses a new array
     reverseArray() {
-        const reverse = this.state.array.sort(function (a, b) { return a - b; }).reverse();; //Adjusted sort function because sort w/o args uses string comparison, not number
+        this.resetArray();
+        const reverse = this.state.array.sort(function (a, b) { return a - b; }).reverse(); //Adjusted sort function because sort w/o args uses string comparison, not number
         this.setState({ array: reverse });
     }
 
@@ -77,6 +86,12 @@ class SortingVisualizer extends React.Component {
         document.getElementById("arrayGen").disabled = true;
         let buttonStyle = document.getElementById("arrayGen").style;
         document.getElementById("arrayGen").title = DISABLED_BUTTON;
+        buttonStyle.cursor = "default";
+        buttonStyle.background = "#000000";
+
+        document.getElementById("sortArray").disabled = true;
+        buttonStyle = document.getElementById("sortArray").style;
+        document.getElementById("sortArray").title = DISABLED_BUTTON;
         buttonStyle.cursor = "default";
         buttonStyle.background = "#000000";
 
@@ -139,13 +154,19 @@ class SortingVisualizer extends React.Component {
     restoreButtons() {
         document.getElementById("arrayGen").disabled = false;
         let buttonStyle = document.getElementById("arrayGen").style;
-        document.getElementById("arrayGen").title = ENABLED_BUTTON.generateArray;
+        document.getElementById("arrayGen").title = ENABLED_BUTTON.generateRandomArray;
+        buttonStyle.background = "#47535E";
+        buttonStyle.cursor = "pointer";
+
+        document.getElementById("sortArray").disabled = false;
+        buttonStyle = document.getElementById("sortArray").style;
+        document.getElementById("sortArray").title = ENABLED_BUTTON.generateSortedArray;
         buttonStyle.background = "#47535E";
         buttonStyle.cursor = "pointer";
 
         document.getElementById("reverseArray").disabled = false;
         buttonStyle = document.getElementById("reverseArray").style;
-        document.getElementById("reverseArray").title = ENABLED_BUTTON.reverseArray;
+        document.getElementById("reverseArray").title = ENABLED_BUTTON.generateReversedArray;
         buttonStyle.background = "#47535E";
         buttonStyle.cursor = "pointer";
 
@@ -388,11 +409,14 @@ class SortingVisualizer extends React.Component {
                     ))}
                 </div>
                 <div className="buttons" >
-                    <button title="Generates a new random array" id="arrayGen" style={{ position: 'relative', top: `${0 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.resetArray()}>
-                        Generate New Array
+                    <button title="Generates a new random unsorted array" id="arrayGen" style={{ position: 'relative', top: `${0 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.resetArray()}>
+                        Generate an Unsorted Array
                 </button>
-                    <button title="Reverse the current array" id="reverseArray" style={{ position: 'relative', top: `${0 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.reverseArray()}>
-                        Reverse Array
+                    <button title="Generates a new sorted array" id="sortArray" style={{ position: 'relative', top: `${0 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.sortArray()}>
+                        Generate a Sorted Array
+                </button>
+                    <button title="Generates a new reversed array" id="reverseArray" style={{ position: 'relative', top: `${0 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.reverseArray()}>
+                        Generate a Sorted Reversed Array
                 </button>
                     <button title="O(N^2) Time Complexity" id="bubbleSort" style={{ position: 'relative', top: `${0.5 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.bubbleSort()}>
                         Bubble Sort
