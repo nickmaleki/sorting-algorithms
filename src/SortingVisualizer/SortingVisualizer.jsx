@@ -14,6 +14,14 @@ let WINDOW_WIDTH = window.innerWidth;
 let WINDOW_HEIGHT = window.innerHeight;
 let NUMBER_OF_ARRAY_BARS = parseInt((WINDOW_WIDTH - 200) / 8);
 
+let bubbleSortData = [];
+let heapSortData = [];
+let insertionSortData = [];
+let mergeSortData = [];
+let modifiedQuickSortData = [];
+let quickSortData = [];
+let selectionSortData = [];
+
 
 function reportWindowSize() {
     WINDOW_WIDTH = window.innerWidth;
@@ -46,13 +54,6 @@ class SortingVisualizer extends React.Component {
             chartDataRandom: {},
             chartDataSorted: {},
             chartDataReversed: {},
-            bubbleSortData: [],
-            heapSortData: [],
-            insertionSortData: [],
-            mergeSortData: [],
-            modifiedQuickSortData: [],
-            quickSortData: [],
-            selectionSortData: [],
             showGraphs: false
         };
     }
@@ -417,7 +418,8 @@ class SortingVisualizer extends React.Component {
 
     comparisonPlot() {
         this.disableButtons();
-        this.getChartRandomData();
+        //this.getChartRandomData();
+        console.log("bubble", bubbleSortData);
         this.setState({
             chartDataRandom: {
                 labels: ['1,000', '2,000', '4,000', '5,000', '10,000', '40,000', '50,000'],
@@ -425,37 +427,38 @@ class SortingVisualizer extends React.Component {
                     {
                         label: 'Bubble Sort',
                         backgroundColor: 'rgba(255, 99, 132, 0.6)',
-                        data: this.state.bubbleSortData,
+                        data: bubbleSortData,
                     }, {
                         label: 'Heap Sort',
                         backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                        data: this.state.heapSortData,
+                        data: heapSortData,
                     }, {
                         label: 'Insertion Sort',
                         backgroundColor: 'rgba(255, 206, 86, 0.6)',
-                        data: this.state.insertionSortData,
+                        data: insertionSortData,
                     }, {
                         label: 'Merge Sort',
                         backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                        data: this.state.mergeSortData,
+                        data: mergeSortData,
                     }, {
                         label: 'Modified Quick Sort',
                         backgroundColor: 'rgba(153, 102, 255, 0.6)',
-                        data: this.state.modifiedQuickSortData,
+                        data: modifiedQuickSortData,
                     }, {
                         label: 'Quick Sort',
                         backgroundColor: 'rgba(255, 159, 64, 0.6)',
-                        data: this.state.quickSortData,
+                        data: quickSortData,
                     }, {
                         label: 'Selection Sort',
                         backgroundColor: 'rgba(99, 255, 132, 0.6)',
-                        data: this.state.selectionSortData,
+                        data: selectionSortData,
                     }
                 ]
             }
         });
 
         this.getChartSortedData();
+        //console.log("bubblesort", bubbleSortData);
         this.setState({
             chartDataSorted: {
                 labels: ['1,000', '2,000', '4,000', '5,000', '10,000', '40,000', '50,000'],
@@ -463,37 +466,38 @@ class SortingVisualizer extends React.Component {
                     {
                         label: 'Bubble Sort',
                         backgroundColor: 'rgba(255, 99, 132, 0.6)',
-                        data: this.state.bubbleSortData,
+                        data: bubbleSortData,
                     }, {
                         label: 'Heap Sort',
                         backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                        data: this.state.heapSortData,
+                        data: heapSortData,
                     }, {
                         label: 'Insertion Sort',
                         backgroundColor: 'rgba(255, 206, 86, 0.6)',
-                        data: this.state.insertionSortData,
+                        data: insertionSortData,
                     }, {
                         label: 'Merge Sort',
                         backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                        data: this.state.mergeSortData,
+                        data: mergeSortData,
                     }, {
                         label: 'Modified Quick Sort',
                         backgroundColor: 'rgba(153, 102, 255, 0.6)',
-                        data: this.state.modifiedQuickSortData,
+                        data: modifiedQuickSortData,
                     }, {
                         label: 'Quick Sort',
                         backgroundColor: 'rgba(255, 159, 64, 0.6)',
-                        data: this.state.quickSortData,
+                        data: quickSortData,
                     }, {
                         label: 'Selection Sort',
                         backgroundColor: 'rgba(99, 255, 132, 0.6)',
-                        data: this.state.selectionSortData,
+                        data: selectionSortData,
                     }
                 ]
             }
         });
 
         this.getChartReverseData();
+        //console.log("bubblereverse", bubbleSortData);
         this.setState({
             chartDataReversed: {
                 labels: ['1,000', '2,000', '4,000', '5,000', '10,000', '40,000', '50,000'],
@@ -501,31 +505,31 @@ class SortingVisualizer extends React.Component {
                     {
                         label: 'Bubble Sort',
                         backgroundColor: 'rgba(255, 99, 132, 0.6)',
-                        data: this.state.bubbleSortData,
+                        data: bubbleSortData,
                     }, {
                         label: 'Heap Sort',
                         backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                        data: this.state.heapSortData,
+                        data: heapSortData,
                     }, {
                         label: 'Insertion Sort',
                         backgroundColor: 'rgba(255, 206, 86, 0.6)',
-                        data: this.state.insertionSortData,
+                        data: insertionSortData,
                     }, {
                         label: 'Merge Sort',
                         backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                        data: this.state.mergeSortData,
+                        data: mergeSortData,
                     }, {
                         label: 'Modified Quick Sort',
                         backgroundColor: 'rgba(153, 102, 255, 0.6)',
-                        data: this.state.modifiedQuickSortData,
+                        data: modifiedQuickSortData,
                     }, {
                         label: 'Quick Sort',
                         backgroundColor: 'rgba(255, 159, 64, 0.6)',
-                        data: this.state.quickSortData,
+                        data: quickSortData,
                     }, {
                         label: 'Selection Sort',
                         backgroundColor: 'rgba(99, 255, 132, 0.6)',
-                        data: this.state.selectionSortData,
+                        data: selectionSortData,
                     }
                 ]
             }
@@ -536,6 +540,7 @@ class SortingVisualizer extends React.Component {
     }
 
     getChartRandomData() {
+        this.resetData();
         var arraySizes = [1000, 2000, 4000, 5000, 10000, 40000, 50000];
         var array = []
         var t0, t1 = 0;
@@ -545,40 +550,41 @@ class SortingVisualizer extends React.Component {
             t0 = performance.now();
             bubbleSort(array.slice());
             t1 = performance.now();
-            this.state.bubbleSortData.push(t1 - t0);
+            bubbleSortData.push(t1 - t0);
 
             t0 = performance.now();
             heapSort(array.slice());
             t1 = performance.now();
-            this.state.heapSortData.push(t1 - t0);
+            heapSortData.push(t1 - t0);
 
             t0 = performance.now();
             insertionSort(array.slice());
             t1 = performance.now();
-            this.state.insertionSortData.push(t1 - t0);
+            insertionSortData.push(t1 - t0);
 
             t0 = performance.now();
             mergeSort(array.slice());
             t1 = performance.now();
-            this.state.mergeSortData.push(t1 - t0);
+            mergeSortData.push(t1 - t0);
 
             t0 = performance.now();
             modifiedQuickSort(array.slice());
             t1 = performance.now();
-            this.state.modifiedQuickSortData.push(t1 - t0);
+            modifiedQuickSortData.push(t1 - t0);
 
             t0 = performance.now();
             quickSort(array.slice());
             t1 = performance.now();
-            this.state.quickSortData.push(t1 - t0);
+            quickSortData.push(t1 - t0);
 
             t0 = performance.now();
             selectionSort(array.slice());
             t1 = performance.now();
-            this.state.selectionSortData.push(t1 - t0);
+            selectionSortData.push(t1 - t0);
         }
     }
     getChartSortedData() {
+        this.resetData();
         var arraySizes = [1000, 2000, 4000, 5000, 10000, 40000, 50000];
         var array = []
         var t0, t1 = 0;
@@ -586,44 +592,44 @@ class SortingVisualizer extends React.Component {
             array = [];
             for (let i = 0; i < arraySizes[index]; i++) { array.push(Math.random()); } //Generate an array based on the current array size
             array.sort((a, b) => a - b); //Adjusted sort function because sort w/o args uses string comparison, not number
-
             t0 = performance.now();
             bubbleSort(array.slice());
             t1 = performance.now();
-            this.state.bubbleSortData.push(t1 - t0);
+            bubbleSortData.push(t1 - t0);
 
             t0 = performance.now();
             heapSort(array.slice());
             t1 = performance.now();
-            this.state.heapSortData.push(t1 - t0);
+            heapSortData.push(t1 - t0);
 
             t0 = performance.now();
             insertionSort(array.slice());
             t1 = performance.now();
-            this.state.insertionSortData.push(t1 - t0);
+            insertionSortData.push(t1 - t0);
 
             t0 = performance.now();
             mergeSort(array.slice());
             t1 = performance.now();
-            this.state.mergeSortData.push(t1 - t0);
+            mergeSortData.push(t1 - t0);
 
             t0 = performance.now();
             modifiedQuickSort(array.slice());
             t1 = performance.now();
-            this.state.modifiedQuickSortData.push(t1 - t0);
+            modifiedQuickSortData.push(t1 - t0);
 
             t0 = performance.now();
             quickSort(array.slice());
             t1 = performance.now();
-            this.state.quickSortData.push(t1 - t0);
+            quickSortData.push(t1 - t0);
 
             t0 = performance.now();
             selectionSort(array.slice());
             t1 = performance.now();
-            this.state.selectionSortData.push(t1 - t0);
+            selectionSortData.push(t1 - t0);
         }
     }
     getChartReverseData() {
+        this.resetData();
         var arraySizes = [1000, 2000, 4000, 5000, 10000, 40000, 50000];
         var array = []
         var t0, t1 = 0;
@@ -634,39 +640,49 @@ class SortingVisualizer extends React.Component {
             t0 = performance.now();
             bubbleSort(array.slice());
             t1 = performance.now();
-            this.state.bubbleSortData.push(t1 - t0);
+            bubbleSortData.push(t1 - t0);
 
             t0 = performance.now();
             heapSort(array.slice());
             t1 = performance.now();
-            this.state.heapSortData.push(t1 - t0);
+            heapSortData.push(t1 - t0);
 
             t0 = performance.now();
             insertionSort(array.slice());
             t1 = performance.now();
-            this.state.insertionSortData.push(t1 - t0);
+            insertionSortData.push(t1 - t0);
 
             t0 = performance.now();
             mergeSort(array.slice());
             t1 = performance.now();
-            this.state.mergeSortData.push(t1 - t0);
+            mergeSortData.push(t1 - t0);
 
             t0 = performance.now();
             modifiedQuickSort(array.slice());
             t1 = performance.now();
-            this.state.modifiedQuickSortData.push(t1 - t0);
+            modifiedQuickSortData.push(t1 - t0);
 
             t0 = performance.now();
             quickSort(array.slice());
             t1 = performance.now();
-            this.state.quickSortData.push(t1 - t0);
+            quickSortData.push(t1 - t0);
 
             t0 = performance.now();
             selectionSort(array.slice());
             t1 = performance.now();
-            this.state.selectionSortData.push(t1 - t0);
+            selectionSortData.push(t1 - t0);
         }
     }
+    resetData() {
+        bubbleSortData = [];
+        heapSortData = [];
+        insertionSortData = [];
+        mergeSortData = [];
+        modifiedQuickSortData = [];
+        quickSortData = [];
+        selectionSortData = [];
+    }
+
 
     render() {
         const array = this.state.array;
