@@ -1,14 +1,14 @@
 export function getBubbleSortAnimations(array) {
     let animations = [];
     let auxillaryArray = array.slice();
-    bubbleSort(auxillaryArray, animations);
+    animatedBubbleSort(auxillaryArray, animations);
     const javaScriptSortedArray = array.slice().sort((a, b) => a - b);
-    console.log("sort works correctly? ", arraysAreEqual(javaScriptSortedArray, auxillaryArray));
+    console.log("Bubble sort works correctly? ", arraysAreEqual(javaScriptSortedArray, auxillaryArray));
     array = auxillaryArray;
     return [animations, array];
 }
 
-function bubbleSort(auxillaryArray, animations) {
+function animatedBubbleSort(auxillaryArray, animations) {
     const N = auxillaryArray.length;
     for (let i = 0; i < N - 1; i++) {
         for (let j = 0; j < N - i - 1; j++) {
@@ -43,4 +43,8 @@ function arraysAreEqual(firstArray, secondArray) {
         }
     }
     return true;
+}
+
+export function bubbleSort(){
+    
 }

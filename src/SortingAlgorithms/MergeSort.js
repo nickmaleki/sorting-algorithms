@@ -1,19 +1,19 @@
 export function getMergeSortAnimations(array) {
     let animations = [];
     let auxillaryArray = array.slice();
-    mergeSort(auxillaryArray, 0, auxillaryArray.length - 1, animations);
+    animatedMergeSort(auxillaryArray, 0, auxillaryArray.length - 1, animations);
     const javaScriptSortedArray = array.slice().sort((a, b) => a - b);
-    console.log(arraysAreEqual(javaScriptSortedArray, auxillaryArray));
+    console.log("Merge sort works correctly? ", arraysAreEqual(javaScriptSortedArray, auxillaryArray));
     array = auxillaryArray;
     return [animations, array];
 }
 
-function mergeSort(auxillaryArray, startIndex, endIndex, animations) {
+function animatedMergeSort(auxillaryArray, startIndex, endIndex, animations) {
     if (startIndex === endIndex)
         return;
     const middleIndex = Math.floor((startIndex + endIndex) / 2);
-    mergeSort(auxillaryArray, startIndex, middleIndex, animations);
-    mergeSort(auxillaryArray, middleIndex + 1, endIndex, animations);
+    animatedMergeSort(auxillaryArray, startIndex, middleIndex, animations);
+    animatedMergeSort(auxillaryArray, middleIndex + 1, endIndex, animations);
     merge(auxillaryArray, startIndex, middleIndex, endIndex, animations);
 }
 
@@ -65,3 +65,23 @@ function arraysAreEqual(firstArray, secondArray) {
     }
     return true;
 }
+
+const mergeArrays = (arr1, arr2) => {
+    let sorted = [];
+
+    while (arr1.length && arr2.length) {
+        if (arr1[0] < arr2[0]) sorted.push(arr1.shift());
+        else sorted.push(arr2.shift());
+    };
+
+    return sorted.concat(arr1.slice().concat(arr2.slice()));
+};
+
+export function mergeSort(arr) {
+    if (arr.length <= 1) return arr;
+    let mid = Math.floor(arr.length / 2),
+        left = mergeSort(arr.slice(0, mid)),
+        right = mergeSort(arr.slice(mid));
+
+    return mergeArrays(left, right);
+};

@@ -1,14 +1,14 @@
 export function getSelectionSortAnimations(array) {
     let animations = [];
     let auxillaryArray = array.slice();
-    selectionSort(auxillaryArray, animations);
+    animatedSelectionSort(auxillaryArray, animations);
     const javaScriptSortedArray = array.slice().sort((a, b) => a - b);
-    console.log("sort works correctly? ", arraysAreEqual(javaScriptSortedArray, auxillaryArray));
+    console.log("Selection sort works correctly? ", arraysAreEqual(javaScriptSortedArray, auxillaryArray));
     array = auxillaryArray;
     return [animations, array];
 }
 
-function selectionSort(auxillaryArray, animations) {
+function animatedSelectionSort(auxillaryArray, animations) {
     const N = auxillaryArray.length;
     for (let i = 0; i < N - 1; i++) {
         let minIndex = i; //Finding minimum element in unsorted array
@@ -42,4 +42,9 @@ function arraysAreEqual(firstArray, secondArray) {
         }
     }
     return true;
+}
+
+
+export function selectionSort(){
+    
 }

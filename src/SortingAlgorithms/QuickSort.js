@@ -2,21 +2,19 @@
 export function getQuickSortAnimations(array) {
     let animations = [];
     let auxillaryArray = array.slice();
-    quickSort(auxillaryArray, 0, auxillaryArray.length - 1, animations);
+    animatedQuickSort(auxillaryArray, 0, auxillaryArray.length - 1, animations);
     const javaScriptSortedArray = array.slice().sort((a, b) => a - b);
-    console.log("sort works correctly? ", arraysAreEqual(javaScriptSortedArray, auxillaryArray));
+    console.log("Quick sort works correctly? ", arraysAreEqual(javaScriptSortedArray, auxillaryArray));
     array = auxillaryArray;
     return [animations, array];
 }
 
-getQuickSortAnimations([7, 2, 1, 6]);
-
-function quickSort(auxillaryArray, startIndex, endIndex, animations) {
+function animatedQuickSort(auxillaryArray, startIndex, endIndex, animations) {
     let pivotIndex;
     if (startIndex < endIndex) {
         pivotIndex = partitionArray(auxillaryArray, startIndex, endIndex, animations);
-        quickSort(auxillaryArray, startIndex, pivotIndex - 1, animations);
-        quickSort(auxillaryArray, pivotIndex + 1, endIndex, animations);
+        animatedQuickSort(auxillaryArray, startIndex, pivotIndex - 1, animations);
+        animatedQuickSort(auxillaryArray, pivotIndex + 1, endIndex, animations);
     }
 }
 
@@ -69,45 +67,6 @@ function arraysAreEqual(firstArray, secondArray) {
     return true;
 }
 
+export function quickSort(){
 
-// export function getInPlaceQuickSortAnimations(array) {
-//     let animations  = [];
-//     let auxillaryArray = array.slice();
-//     quickSort(auxillaryArray, animations);
-//     const javaScriptSortedArray = array.slice().sort((a, b) => a - b);
-//     console.log("sort works correctly? ",arraysAreEqual(javaScriptSortedArray, auxillaryArray));
-//     array = auxillaryArray;
-//     return [animations, array];
-//   }
-
-//   function inPlaceQuickSort(auxillaryArray, animations){ 
-
-//   }
-
-
-//   const pivot = (arr, start = 0, end = arr.length + 1) => {
-//       const swap = (list, a, b) => [list[a], list[b]] = [list[b], list[a]];
-
-//       let pivot = arr[start],
-//           pointer = start;
-
-//       for (let i = start; i < arr.length; i++) {
-//         if (arr[i] < pivot  ) {
-//           pointer++;
-//           swap(arr, pointer, i);
-//         }
-//       };
-//       swap(arr, start, pointer);
-
-//       return pointer;
-//     }
-
-//     const quickSort = (arr, start = 0, end = arr.length) => {
-//       let pivotIndex = pivot(arr, start, end);
-
-//       if (start >= end) return arr;
-//       quickSort(arr, start, pivotIndex);
-//       quickSort(arr, pivotIndex + 1, end);
-
-//       return arr;
-//     };
+}

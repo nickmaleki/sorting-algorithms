@@ -1,12 +1,12 @@
 import React from 'react';
 import './SortingVisualizer.css';
-import { getBubbleSortAnimations } from '../SortingAlgorithms/BubbleSort';
-import { getHeapSortAnimations } from '../SortingAlgorithms/HeapSort';
-import { getInsertionSortAnimations } from '../SortingAlgorithms/InsertionSort';
-import { getMergeSortAnimations } from '../SortingAlgorithms/MergeSort';
-import { getModifiedQuickSortAnimations } from '../SortingAlgorithms/ModifiedQuickSort';
-import { getQuickSortAnimations } from '../SortingAlgorithms/QuickSort';
-import { getSelectionSortAnimations } from '../SortingAlgorithms/SelectionSort';
+import { getBubbleSortAnimations, bubbleSort } from '../SortingAlgorithms/BubbleSort';
+import { getHeapSortAnimations, heapSort } from '../SortingAlgorithms/HeapSort';
+import { getInsertionSortAnimations, insertionSort } from '../SortingAlgorithms/InsertionSort';
+import { getMergeSortAnimations, mergeSort } from '../SortingAlgorithms/MergeSort';
+import { getModifiedQuickSortAnimations, modifiedQuickSort } from '../SortingAlgorithms/ModifiedQuickSort';
+import { getQuickSortAnimations, quickSort } from '../SortingAlgorithms/QuickSort';
+import { getSelectionSortAnimations, selectionSort } from '../SortingAlgorithms/SelectionSort';
 import Chart from '../Components/Chart';
 
 //Changing width,height accordingly with the browser
@@ -43,7 +43,16 @@ class SortingVisualizer extends React.Component {
         super(props);
         this.state = {
             array: [],
-            chartData: {},
+            chartDataRandom: {},
+            chartDataSorted: {},
+            chartDataReversed: {},
+            bubbleSortData: [],
+            heapSortData: [],
+            insertionSortData: [],
+            mergeSortData: [],
+            modifiedQuickSortData: [],
+            quickSortData: [],
+            selectionSortData: [],
             showGraphs: false
         };
     }
@@ -66,17 +75,16 @@ class SortingVisualizer extends React.Component {
     //Sorts a new array
     sortArray() {
         this.resetArray();
-        const sorted = this.state.array.sort(function (a, b) { return a - b; }); //Adjusted sort function because sort w/o args uses string comparison, not number
+        const sorted = this.state.array.slice().sort((a, b) => a - b); //Adjusted sort function because sort w/o args uses string comparison, not number
         this.setState({ array: sorted });
     }
 
     //Sorts and reverses a new array
     reverseArray() {
         this.resetArray();
-        const reverse = this.state.array.sort(function (a, b) { return a - b; }).reverse(); //Adjusted sort function because sort w/o args uses string comparison, not number
+        const reverse = this.state.array.slice().sort((a, b) => a - b).reverse(); //Adjusted sort function because sort w/o args uses string comparison, not number
         this.setState({ array: reverse });
     }
-
 
     disableButtons() {
         document.getElementById("arrayGen").disabled = true;
@@ -249,8 +257,34 @@ class SortingVisualizer extends React.Component {
     }
 
     heapSort() {
-
+        this.disableButtons();
+        const [animations, sortArray] = getHeapSortAnimations(this.state.array);
+        // for (let i = 0; i < animations.length; i++) {
+        //     const isColorChange = (animations[i][0] === "comparision1") || (animations[i][0] === "comparision2");
+        //     const arrayBars = document.getElementsByClassName('array-bar');
+        //     if (isColorChange === true) {
+        //         const color = (animations[i][0] === "comparision1") ? SECONDARY_COLOR : PRIMARY_COLOR;
+        //         const [temp, barOneIndex, barTwoIndex] = animations[i];
+        //         const barOneStyle = arrayBars[barOneIndex].style;
+        //         const barTwoStyle = arrayBars[barTwoIndex].style;
+        //         setTimeout(() => {
+        //             barOneStyle.backgroundColor = color;
+        //             barTwoStyle.backgroundColor = color;
+        //         }, i * ANIMATION_SPEED_MS);
+        //     }
+        //     else {
+        //         const [temp, barIndex, newHeight] = animations[i];
+        //         const barStyle = arrayBars[barIndex].style;
+        //         setTimeout(() => {
+        //             barStyle.height = `${newHeight}px`;
+        //         }, i * ANIMATION_SPEED_MS);
+        //     }
+        // }
+        // // this.setState({array: sortArray})
+        // const RESTORE_TIME = parseInt(ANIMATION_SPEED_MS * animations.length / 2 + 3000);
+        // setTimeout(() => this.restoreButtons(), RESTORE_TIME);
     }
+
 
     insertionSort() {
         this.disableButtons();
@@ -383,38 +417,115 @@ class SortingVisualizer extends React.Component {
 
     comparisonPlot() {
         this.disableButtons();
+        this.getChartRandomData();
         this.setState({
-            chartData: {
+            chartDataRandom: {
                 labels: ['1,000', '2,000', '4,000', '5,000', '10,000', '40,000', '50,000'],
                 datasets: [
                     {
                         label: 'Bubble Sort',
                         backgroundColor: 'rgba(255, 99, 132, 0.6)',
-                        data: [2674, 1045, 3060, 10519, 195162, 95072, 39900],
+                        data: this.state.bubbleSortData,
                     }, {
                         label: 'Heap Sort',
                         backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                        data: [7594, 1045, 3760, 10519, 195162, 9072, 300],
+                        data: this.state.heapSortData,
                     }, {
                         label: 'Insertion Sort',
                         backgroundColor: 'rgba(255, 206, 86, 0.6)',
-                        data: [67594, 1045, 3060, 10519, 15162, 95072, 300],
+                        data: this.state.insertionSortData,
                     }, {
                         label: 'Merge Sort',
                         backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                        data: [67594, 145, 3060, 10519, 195162, 95072, 30000],
+                        data: this.state.mergeSortData,
                     }, {
                         label: 'Modified Quick Sort',
                         backgroundColor: 'rgba(153, 102, 255, 0.6)',
-                        data: [674, 145, 73060, 1059, 195162, 95072, 300700],
+                        data: this.state.modifiedQuickSortData,
                     }, {
                         label: 'Quick Sort',
                         backgroundColor: 'rgba(255, 159, 64, 0.6)',
-                        data: [67594, 71045, 2060, 10519, 19516, 95072, 43000],
+                        data: this.state.quickSortData,
                     }, {
                         label: 'Selection Sort',
                         backgroundColor: 'rgba(99, 255, 132, 0.6)',
-                        data: [6754, 1045, 360, 1059, 19162, 795072, 30000],
+                        data: this.state.selectionSortData,
+                    }
+                ]
+            }
+        });
+
+        this.getChartSortedData();
+        this.setState({
+            chartDataSorted: {
+                labels: ['1,000', '2,000', '4,000', '5,000', '10,000', '40,000', '50,000'],
+                datasets: [
+                    {
+                        label: 'Bubble Sort',
+                        backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                        data: this.state.bubbleSortData,
+                    }, {
+                        label: 'Heap Sort',
+                        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                        data: this.state.heapSortData,
+                    }, {
+                        label: 'Insertion Sort',
+                        backgroundColor: 'rgba(255, 206, 86, 0.6)',
+                        data: this.state.insertionSortData,
+                    }, {
+                        label: 'Merge Sort',
+                        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                        data: this.state.mergeSortData,
+                    }, {
+                        label: 'Modified Quick Sort',
+                        backgroundColor: 'rgba(153, 102, 255, 0.6)',
+                        data: this.state.modifiedQuickSortData,
+                    }, {
+                        label: 'Quick Sort',
+                        backgroundColor: 'rgba(255, 159, 64, 0.6)',
+                        data: this.state.quickSortData,
+                    }, {
+                        label: 'Selection Sort',
+                        backgroundColor: 'rgba(99, 255, 132, 0.6)',
+                        data: this.state.selectionSortData,
+                    }
+                ]
+            }
+        });
+
+        this.getChartReverseData();
+        this.setState({
+            chartDataReversed: {
+                labels: ['1,000', '2,000', '4,000', '5,000', '10,000', '40,000', '50,000'],
+                datasets: [
+                    {
+                        label: 'Bubble Sort',
+                        backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                        data: this.state.bubbleSortData,
+                    }, {
+                        label: 'Heap Sort',
+                        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                        data: this.state.heapSortData,
+                    }, {
+                        label: 'Insertion Sort',
+                        backgroundColor: 'rgba(255, 206, 86, 0.6)',
+                        data: this.state.insertionSortData,
+                    }, {
+                        label: 'Merge Sort',
+                        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                        data: this.state.mergeSortData,
+                    }, {
+                        label: 'Modified Quick Sort',
+                        backgroundColor: 'rgba(153, 102, 255, 0.6)',
+                        data: this.state.modifiedQuickSortData,
+                    }, {
+                        label: 'Quick Sort',
+                        backgroundColor: 'rgba(255, 159, 64, 0.6)',
+                        data: this.state.quickSortData,
+                    }, {
+                        label: 'Selection Sort',
+                        backgroundColor: 'rgba(99, 255, 132, 0.6)',
+                        data: this.state.selectionSortData,
                     }
                 ]
             }
@@ -424,8 +535,137 @@ class SortingVisualizer extends React.Component {
         this.render();
     }
 
-    getChartData() {
-        let n = [1000, 2000, 4000, 5000, 10000, 40000, 50000];
+    getChartRandomData() {
+        var arraySizes = [1000, 2000, 4000, 5000, 10000, 40000, 50000];
+        var array = []
+        var t0, t1 = 0;
+        for (var index = 0; index < arraySizes.length; ++index) { //Iterate through each array size
+            array = [];
+            for (let i = 0; i < arraySizes[index]; i++) { array.push(Math.random()); } //Generate an array based on the current array size
+            t0 = performance.now();
+            bubbleSort(array.slice());
+            t1 = performance.now();
+            this.state.bubbleSortData.push(t1 - t0);
+
+            t0 = performance.now();
+            heapSort(array.slice());
+            t1 = performance.now();
+            this.state.heapSortData.push(t1 - t0);
+
+            t0 = performance.now();
+            insertionSort(array.slice());
+            t1 = performance.now();
+            this.state.insertionSortData.push(t1 - t0);
+
+            t0 = performance.now();
+            mergeSort(array.slice());
+            t1 = performance.now();
+            this.state.mergeSortData.push(t1 - t0);
+
+            t0 = performance.now();
+            modifiedQuickSort(array.slice());
+            t1 = performance.now();
+            this.state.modifiedQuickSortData.push(t1 - t0);
+
+            t0 = performance.now();
+            quickSort(array.slice());
+            t1 = performance.now();
+            this.state.quickSortData.push(t1 - t0);
+
+            t0 = performance.now();
+            selectionSort(array.slice());
+            t1 = performance.now();
+            this.state.selectionSortData.push(t1 - t0);
+        }
+    }
+    getChartSortedData() {
+        var arraySizes = [1000, 2000, 4000, 5000, 10000, 40000, 50000];
+        var array = []
+        var t0, t1 = 0;
+        for (var index = 0; index < arraySizes.length; ++index) { //Iterate through each array size
+            array = [];
+            for (let i = 0; i < arraySizes[index]; i++) { array.push(Math.random()); } //Generate an array based on the current array size
+            array.sort((a, b) => a - b); //Adjusted sort function because sort w/o args uses string comparison, not number
+
+            t0 = performance.now();
+            bubbleSort(array.slice());
+            t1 = performance.now();
+            this.state.bubbleSortData.push(t1 - t0);
+
+            t0 = performance.now();
+            heapSort(array.slice());
+            t1 = performance.now();
+            this.state.heapSortData.push(t1 - t0);
+
+            t0 = performance.now();
+            insertionSort(array.slice());
+            t1 = performance.now();
+            this.state.insertionSortData.push(t1 - t0);
+
+            t0 = performance.now();
+            mergeSort(array.slice());
+            t1 = performance.now();
+            this.state.mergeSortData.push(t1 - t0);
+
+            t0 = performance.now();
+            modifiedQuickSort(array.slice());
+            t1 = performance.now();
+            this.state.modifiedQuickSortData.push(t1 - t0);
+
+            t0 = performance.now();
+            quickSort(array.slice());
+            t1 = performance.now();
+            this.state.quickSortData.push(t1 - t0);
+
+            t0 = performance.now();
+            selectionSort(array.slice());
+            t1 = performance.now();
+            this.state.selectionSortData.push(t1 - t0);
+        }
+    }
+    getChartReverseData() {
+        var arraySizes = [1000, 2000, 4000, 5000, 10000, 40000, 50000];
+        var array = []
+        var t0, t1 = 0;
+        for (var index = 0; index < arraySizes.length; ++index) { //Iterate through each array size
+            array = [];
+            for (let i = 0; i < arraySizes[index]; i++) { array.push(Math.random()); } //Generate an array based on the current array size
+            array.sort((a, b) => a - b).reverse();
+            t0 = performance.now();
+            bubbleSort(array.slice());
+            t1 = performance.now();
+            this.state.bubbleSortData.push(t1 - t0);
+
+            t0 = performance.now();
+            heapSort(array.slice());
+            t1 = performance.now();
+            this.state.heapSortData.push(t1 - t0);
+
+            t0 = performance.now();
+            insertionSort(array.slice());
+            t1 = performance.now();
+            this.state.insertionSortData.push(t1 - t0);
+
+            t0 = performance.now();
+            mergeSort(array.slice());
+            t1 = performance.now();
+            this.state.mergeSortData.push(t1 - t0);
+
+            t0 = performance.now();
+            modifiedQuickSort(array.slice());
+            t1 = performance.now();
+            this.state.modifiedQuickSortData.push(t1 - t0);
+
+            t0 = performance.now();
+            quickSort(array.slice());
+            t1 = performance.now();
+            this.state.quickSortData.push(t1 - t0);
+
+            t0 = performance.now();
+            selectionSort(array.slice());
+            t1 = performance.now();
+            this.state.selectionSortData.push(t1 - t0);
+        }
     }
 
     render() {
@@ -439,18 +679,11 @@ class SortingVisualizer extends React.Component {
                         <div className="App-header" >
                             <h1>Time Complexity Analysis</h1>
                         </div>
-                        <Chart chartData={this.state.chartData} title="Algorithms Tested With Random Data" />
+                        <Chart chartData={this.state.chartDataRandom} title="Algorithms Tested With Random Data" />
                         <div style={{ height: `50px` }}></div>
-                        <Chart chartData={this.state.chartData} title="Algorithms Tested With Sorted Data" />
+                        <Chart chartData={this.state.chartDataSorted} title="Algorithms Tested With Sorted Data" />
                         <div style={{ height: `50px` }}></div>
-                        <Chart chartData={this.state.chartData} title="Algorithms Tested With Reversely Sorted Data" />
-
-                        {/* <Chart chartData={this.state.chartData} algorithm="Heap Sort" />
-                        <Chart chartData={this.state.chartData} algorithm="Insertion Sort" />
-                        <Chart chartData={this.state.chartData} algorithm="Merge Sort" />
-                        <Chart chartData={this.state.chartData} algorithm="Modified Quick Sort" />
-                        <Chart chartData={this.state.chartData} algorithm="Quick Sort" />
-                        <Chart chartData={this.state.chartData} algorithm="Selection Sort" /> */}
+                        <Chart chartData={this.state.chartDataReversed} title="Algorithms Tested With Reversely Sorted Data" />
                     </div>
                 </>
             );

@@ -1,14 +1,14 @@
 export function getInsertionSortAnimations(array) {
     let animations = [];
     let auxillaryArray = array.slice();
-    insertionSort(auxillaryArray, animations);
+    animatedInsertionSort(auxillaryArray, animations);
     const javaScriptSortedArray = array.slice().sort((a, b) => a - b);
-    console.log("sort works correctly? ", arraysAreEqual(javaScriptSortedArray, auxillaryArray));
+    console.log("Insertion sort works correctly? ", arraysAreEqual(javaScriptSortedArray, auxillaryArray));
     array = auxillaryArray;
     return [animations, array];
 }
 
-function insertionSort(auxillaryArray, animations) {
+function animatedInsertionSort(auxillaryArray, animations) {
     const N = auxillaryArray.length;
     for (let i = 1; i < N; i++) {
         let key = auxillaryArray[i];
@@ -39,4 +39,9 @@ function arraysAreEqual(firstArray, secondArray) {
         }
     }
     return true;
+}
+
+
+export function insertionSort(){
+    
 }
