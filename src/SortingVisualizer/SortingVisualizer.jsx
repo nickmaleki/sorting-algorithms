@@ -418,8 +418,8 @@ class SortingVisualizer extends React.Component {
 
     comparisonPlot() {
         this.disableButtons();
-        //this.getChartRandomData();
-        console.log("bubble", bubbleSortData);
+        this.getChartRandomData();
+        //console.log("bubble", bubbleSortData);
         this.setState({
             chartDataRandom: {
                 labels: ['1,000', '2,000', '4,000', '5,000', '10,000', '40,000', '50,000'],
