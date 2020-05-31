@@ -3,6 +3,11 @@
   bottom:0px;
 }
 
+.array-container {
+  position: relative;
+  bottom:0px;
+}
+
 .array-bar {
   width: 4px;
   display: inline-block; /* arranges the array bars in horizontal way*/

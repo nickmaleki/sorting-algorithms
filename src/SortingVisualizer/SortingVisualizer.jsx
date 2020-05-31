@@ -7,20 +7,13 @@ import { getMergeSortAnimations } from '../SortingAlgorithms/MergeSort';
 import { getModifiedQuickSortAnimations } from '../SortingAlgorithms/ModifiedQuickSort';
 import { getQuickSortAnimations } from '../SortingAlgorithms/QuickSort';
 import { getSelectionSortAnimations } from '../SortingAlgorithms/SelectionSort';
-
-//import {getInsertionSortAnimations} from '../SortingAlgorithms/InPlaceQuickSort';
+import Chart from '../Components/Chart';
 
 //Changing width,height accordingly with the browser
 let WINDOW_WIDTH = window.innerWidth;
 let WINDOW_HEIGHT = window.innerHeight;
 let NUMBER_OF_ARRAY_BARS = parseInt((WINDOW_WIDTH - 200) / 8);
 
-// TODO: 
-// HeapSort.js
-// InPlaceQuickSort.js
-// ModifiedQuickSort.js
-// Update SortVisualizer.jsx
-// Update the CSS
 
 function reportWindowSize() {
     WINDOW_WIDTH = window.innerWidth;
@@ -49,12 +42,15 @@ class SortingVisualizer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            array: []
+            array: [],
+            chartData: {},
+            showGraphs: false
         };
     }
 
     componentDidMount() {
         this.resetArray();
+        //this.getChartData();
     }
 
     //Generates new random array 
@@ -149,7 +145,6 @@ class SortingVisualizer extends React.Component {
         buttonStyle.cursor = "default";
         buttonStyle.background = "#000000";
     }
-
 
     restoreButtons() {
         document.getElementById("arrayGen").disabled = false;
@@ -385,73 +380,142 @@ class SortingVisualizer extends React.Component {
         setTimeout(() => this.restoreButtons(), RESTORE_TIME);
     }
 
-    comparisonPlot() {
 
+    comparisonPlot() {
+        this.disableButtons();
+        this.setState({
+            chartData: {
+                labels: ['1,000', '2,000', '4,000', '5,000', '10,000', '40,000', '50,000'],
+                datasets: [
+                    {
+                        label: 'Bubble Sort',
+                        backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                        data: [2674, 1045, 3060, 10519, 195162, 95072, 39900],
+                    }, {
+                        label: 'Heap Sort',
+                        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                        data: [7594, 1045, 3760, 10519, 195162, 9072, 300],
+                    }, {
+                        label: 'Insertion Sort',
+                        backgroundColor: 'rgba(255, 206, 86, 0.6)',
+                        data: [67594, 1045, 3060, 10519, 15162, 95072, 300],
+                    }, {
+                        label: 'Merge Sort',
+                        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                        data: [67594, 145, 3060, 10519, 195162, 95072, 30000],
+                    }, {
+                        label: 'Modified Quick Sort',
+                        backgroundColor: 'rgba(153, 102, 255, 0.6)',
+                        data: [674, 145, 73060, 1059, 195162, 95072, 300700],
+                    }, {
+                        label: 'Quick Sort',
+                        backgroundColor: 'rgba(255, 159, 64, 0.6)',
+                        data: [67594, 71045, 2060, 10519, 19516, 95072, 43000],
+                    }, {
+                        label: 'Selection Sort',
+                        backgroundColor: 'rgba(99, 255, 132, 0.6)',
+                        data: [6754, 1045, 360, 1059, 19162, 795072, 30000],
+                    }
+                ]
+            }
+        });
+
+        this.setState({ showGraphs: true })
+        this.render();
     }
 
+    getChartData() {
+        let n = [1000, 2000, 4000, 5000, 10000, 40000, 50000];
+    }
 
     render() {
         const array = this.state.array;
         const SORT_BUTTONS = 6;
         const TOTAL_BUTTONS = 1 + SORT_BUTTONS;
-        return (
-            <>
-                <div className="array-container" style={{ position: 'absolute', right: `20px` }}>
-                    {array.map((value, idx) => (
-                        <div
-                            className="array-bar"
-                            key={idx}
-                            style={{
-                                backgroundColor: PRIMARY_COLOR,
-                                height: `${value}px`
-                            }}
-                        ></div>
-                    ))}
-                </div>
-                <div className="buttons" >
-                    <button title="Generates a new random unsorted array" id="arrayGen" style={{ position: 'relative', top: `${0 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.resetArray()}>
-                        Generate an Unsorted Array
-                </button>
-                    <button title="Generates a new sorted array" id="sortArray" style={{ position: 'relative', top: `${0 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.sortArray()}>
-                        Generate a Sorted Array
-                </button>
-                    <button title="Generates a new reversed array" id="reverseArray" style={{ position: 'relative', top: `${0 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.reverseArray()}>
-                        Generate a Sorted Reversed Array
-                </button>
-                    <button title="O(N^2) Time Complexity" id="bubbleSort" style={{ position: 'relative', top: `${0.5 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.bubbleSort()}>
-                        Bubble Sort
-                </button>
-                    <button title="O(NlogN) Time Complexity" id="heapSort" style={{ position: 'relative', top: `${0.5 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.heapSort()}>
-                        Heap Sort
-                </button>
-                    <button title="O(N^2) Time Complexity" id="insertionSort" style={{ position: 'relative', top: `${0.5 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.insertionSort()}>
-                        Insertion Sort
-                </button>
-                    <button title="O(NlogN) Time Complexity" id="mergeSort" style={{ position: 'relative', top: `${0.5 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.mergeSort()}>
-                        Merge Sort
-                </button>
-                    <button title="O(N^2) Time Complexity" id="modQuickSort" style={{ position: 'relative', top: `${0.5 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.modQuickSort()}>
-                        Modified Quick Sort
-                </button>
-                    <button title="O(N^2) Time Complexity" id="quickSort" style={{ position: 'relative', top: `${0.5 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.quickSort()}>
-                        In-Place Quick Sort
-                </button>
-                    <button title="O(N^2) Time Complexity" id="selectionSort" style={{ position: 'relative', top: `${0.5 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.selectionSort()}>
-                        Selection Sort
-                </button>
-                    <button title="Compare all algorithms for different input sizes" id="comparisonPlot" style={{ position: 'relative', top: `${1.0 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.comparisonPlot()}>
-                        Comparison Plot
-                </button>
-                </div>
-            </>
-        );
+        if (this.state.showGraphs) {
+            return (
+                <>
+                    <div className="Charts">
+                        <div className="App-header" >
+                            <h1>Time Complexity Analysis</h1>
+                        </div>
+                        <Chart chartData={this.state.chartData} title="Algorithms Tested With Random Data" />
+                        <div style={{ height: `50px` }}></div>
+                        <Chart chartData={this.state.chartData} title="Algorithms Tested With Sorted Data" />
+                        <div style={{ height: `50px` }}></div>
+                        <Chart chartData={this.state.chartData} title="Algorithms Tested With Reversely Sorted Data" />
+
+                        {/* <Chart chartData={this.state.chartData} algorithm="Heap Sort" />
+                        <Chart chartData={this.state.chartData} algorithm="Insertion Sort" />
+                        <Chart chartData={this.state.chartData} algorithm="Merge Sort" />
+                        <Chart chartData={this.state.chartData} algorithm="Modified Quick Sort" />
+                        <Chart chartData={this.state.chartData} algorithm="Quick Sort" />
+                        <Chart chartData={this.state.chartData} algorithm="Selection Sort" /> */}
+                    </div>
+                </>
+            );
+
+        } else {
+            return (
+                <>
+                    <div className="array-container" style={{ position: 'absolute', right: `20px` }}>
+                        {array.map((value, idx) => (
+                            <div
+                                className="array-bar"
+                                key={idx}
+                                style={{
+                                    backgroundColor: PRIMARY_COLOR,
+                                    height: `${value}px`
+                                }}
+                            ></div>
+                        ))}
+                    </div>
+                    <div className="buttons" >
+                        <button title="Generates a new random unsorted array" id="arrayGen" style={{ position: 'relative', top: `${0 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.resetArray()}>
+                            Generate an Unsorted Array
+                    </button>
+                        <button title="Generates a new sorted array" id="sortArray" style={{ position: 'relative', top: `${0 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.sortArray()}>
+                            Generate a Sorted Array
+                    </button>
+                        <button title="Generates a new reversed array" id="reverseArray" style={{ position: 'relative', top: `${0 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.reverseArray()}>
+                            Generate a Sorted Reversed Array
+                    </button>
+                        <button title="O(N^2) Time Complexity" id="bubbleSort" style={{ position: 'relative', top: `${0.5 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.bubbleSort()}>
+                            Bubble Sort
+                    </button>
+                        <button title="O(NlogN) Time Complexity" id="heapSort" style={{ position: 'relative', top: `${0.5 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.heapSort()}>
+                            Heap Sort
+                    </button>
+                        <button title="O(N^2) Time Complexity" id="insertionSort" style={{ position: 'relative', top: `${0.5 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.insertionSort()}>
+                            Insertion Sort
+                    </button>
+                        <button title="O(NlogN) Time Complexity" id="mergeSort" style={{ position: 'relative', top: `${0.5 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.mergeSort()}>
+                            Merge Sort
+                    </button>
+                        <button title="O(N^2) Time Complexity" id="modQuickSort" style={{ position: 'relative', top: `${0.5 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.modQuickSort()}>
+                            Modified Quick Sort
+                    </button>
+                        <button title="O(N^2) Time Complexity" id="quickSort" style={{ position: 'relative', top: `${0.5 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.quickSort()}>
+                            In-Place Quick Sort
+                    </button>
+                        <button title="O(N^2) Time Complexity" id="selectionSort" style={{ position: 'relative', top: `${0.5 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.selectionSort()}>
+                            Selection Sort
+                    </button>
+                        <button title="Compare all algorithms for different input sizes" id="comparisonPlot" style={{ position: 'relative', top: `${1.0 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.comparisonPlot()}>
+                            Comparison Plot
+                    </button>
+
+                    </div>
+                </>
+            );
+        }
+
     }
 }
 
 // From https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript
 function randomIntFromInterval(min, max) {
-    // min and max included
-    return Math.floor(Math.random() * (max - min + 1) + min);
+    return Math.floor(Math.random() * (max - min + 1) + min); //min max inclusive
 }
 
 export default SortingVisualizer;
