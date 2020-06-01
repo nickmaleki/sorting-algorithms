@@ -151,7 +151,7 @@ class SortingVisualizer extends React.Component {
         document.getElementById("comparisonPlot").disabled = true;
         buttonStyle = document.getElementById("comparisonPlot").style;
         document.getElementById("comparisonPlot").title = DISABLED_BUTTON;
-        buttonStyle.cursor = "default";
+        buttonStyle.cursor = "progress";
         buttonStyle.background = "#000000";
     }
 
@@ -220,7 +220,7 @@ class SortingVisualizer extends React.Component {
         buttonStyle = document.getElementById("comparisonPlot").style;
         document.getElementById("comparisonPlot").title = ENABLED_BUTTON.plotToolTip;
         buttonStyle.background = "#47535E";
-        buttonStyle.cursor = "pointer";
+        buttonStyle.cursor = "progress";
     }
 
 
@@ -416,129 +416,6 @@ class SortingVisualizer extends React.Component {
     }
 
 
-    comparisonPlot() {
-        this.disableButtons();
-        this.getChartRandomData();
-        //console.log("bubble", bubbleSortData);
-        this.setState({
-            chartDataRandom: {
-                labels: ['1,000', '2,000', '4,000', '5,000', '10,000', '40,000', '50,000'],
-                datasets: [
-                    {
-                        label: 'Bubble Sort',
-                        backgroundColor: 'rgba(255, 99, 132, 0.6)',
-                        data: bubbleSortData,
-                    }, {
-                        label: 'Heap Sort',
-                        backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                        data: heapSortData,
-                    }, {
-                        label: 'Insertion Sort',
-                        backgroundColor: 'rgba(255, 206, 86, 0.6)',
-                        data: insertionSortData,
-                    }, {
-                        label: 'Merge Sort',
-                        backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                        data: mergeSortData,
-                    }, {
-                        label: 'Modified Quick Sort',
-                        backgroundColor: 'rgba(153, 102, 255, 0.6)',
-                        data: modifiedQuickSortData,
-                    }, {
-                        label: 'Quick Sort',
-                        backgroundColor: 'rgba(255, 159, 64, 0.6)',
-                        data: quickSortData,
-                    }, {
-                        label: 'Selection Sort',
-                        backgroundColor: 'rgba(99, 255, 132, 0.6)',
-                        data: selectionSortData,
-                    }
-                ]
-            }
-        });
-
-        this.getChartSortedData();
-        //console.log("bubblesort", bubbleSortData);
-        this.setState({
-            chartDataSorted: {
-                labels: ['1,000', '2,000', '4,000', '5,000', '10,000', '40,000', '50,000'],
-                datasets: [
-                    {
-                        label: 'Bubble Sort',
-                        backgroundColor: 'rgba(255, 99, 132, 0.6)',
-                        data: bubbleSortData,
-                    }, {
-                        label: 'Heap Sort',
-                        backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                        data: heapSortData,
-                    }, {
-                        label: 'Insertion Sort',
-                        backgroundColor: 'rgba(255, 206, 86, 0.6)',
-                        data: insertionSortData,
-                    }, {
-                        label: 'Merge Sort',
-                        backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                        data: mergeSortData,
-                    }, {
-                        label: 'Modified Quick Sort',
-                        backgroundColor: 'rgba(153, 102, 255, 0.6)',
-                        data: modifiedQuickSortData,
-                    }, {
-                        label: 'Quick Sort',
-                        backgroundColor: 'rgba(255, 159, 64, 0.6)',
-                        data: quickSortData,
-                    }, {
-                        label: 'Selection Sort',
-                        backgroundColor: 'rgba(99, 255, 132, 0.6)',
-                        data: selectionSortData,
-                    }
-                ]
-            }
-        });
-
-        this.getChartReverseData();
-        //console.log("bubblereverse", bubbleSortData);
-        this.setState({
-            chartDataReversed: {
-                labels: ['1,000', '2,000', '4,000', '5,000', '10,000', '40,000', '50,000'],
-                datasets: [
-                    {
-                        label: 'Bubble Sort',
-                        backgroundColor: 'rgba(255, 99, 132, 0.6)',
-                        data: bubbleSortData,
-                    }, {
-                        label: 'Heap Sort',
-                        backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                        data: heapSortData,
-                    }, {
-                        label: 'Insertion Sort',
-                        backgroundColor: 'rgba(255, 206, 86, 0.6)',
-                        data: insertionSortData,
-                    }, {
-                        label: 'Merge Sort',
-                        backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                        data: mergeSortData,
-                    }, {
-                        label: 'Modified Quick Sort',
-                        backgroundColor: 'rgba(153, 102, 255, 0.6)',
-                        data: modifiedQuickSortData,
-                    }, {
-                        label: 'Quick Sort',
-                        backgroundColor: 'rgba(255, 159, 64, 0.6)',
-                        data: quickSortData,
-                    }, {
-                        label: 'Selection Sort',
-                        backgroundColor: 'rgba(99, 255, 132, 0.6)',
-                        data: selectionSortData,
-                    }
-                ]
-            }
-        });
-
-        this.setState({ showGraphs: true })
-        this.render();
-    }
-
     getChartRandomData() {
         this.resetData();
         var arraySizes = [1000, 2000, 4000, 5000, 10000, 40000, 50000];
@@ -682,7 +559,130 @@ class SortingVisualizer extends React.Component {
         quickSortData = [];
         selectionSortData = [];
     }
+    getAllData() {
+        this.getChartRandomData();
+        //console.log("bubble", bubbleSortData);
+        this.setState({
+            chartDataRandom: {
+                labels: ['1,000', '2,000', '4,000', '5,000', '10,000', '40,000', '50,000'],
+                datasets: [
+                    {
+                        label: 'Bubble Sort',
+                        backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                        data: bubbleSortData,
+                    }, {
+                        label: 'Heap Sort',
+                        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                        data: heapSortData,
+                    }, {
+                        label: 'Insertion Sort',
+                        backgroundColor: 'rgba(255, 206, 86, 0.6)',
+                        data: insertionSortData,
+                    }, {
+                        label: 'Merge Sort',
+                        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                        data: mergeSortData,
+                    }, {
+                        label: 'Modified Quick Sort',
+                        backgroundColor: 'rgba(153, 102, 255, 0.6)',
+                        data: modifiedQuickSortData,
+                    }, {
+                        label: 'Quick Sort',
+                        backgroundColor: 'rgba(255, 159, 64, 0.6)',
+                        data: quickSortData,
+                    }, {
+                        label: 'Selection Sort',
+                        backgroundColor: 'rgba(99, 255, 132, 0.6)',
+                        data: selectionSortData,
+                    }
+                ]
+            }
+        });
 
+        this.getChartSortedData();
+        //console.log("bubblesort", bubbleSortData);
+        this.setState({
+            chartDataSorted: {
+                labels: ['1,000', '2,000', '4,000', '5,000', '10,000', '40,000', '50,000'],
+                datasets: [
+                    {
+                        label: 'Bubble Sort',
+                        backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                        data: bubbleSortData,
+                    }, {
+                        label: 'Heap Sort',
+                        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                        data: heapSortData,
+                    }, {
+                        label: 'Insertion Sort',
+                        backgroundColor: 'rgba(255, 206, 86, 0.6)',
+                        data: insertionSortData,
+                    }, {
+                        label: 'Merge Sort',
+                        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                        data: mergeSortData,
+                    }, {
+                        label: 'Modified Quick Sort',
+                        backgroundColor: 'rgba(153, 102, 255, 0.6)',
+                        data: modifiedQuickSortData,
+                    }, {
+                        label: 'Quick Sort',
+                        backgroundColor: 'rgba(255, 159, 64, 0.6)',
+                        data: quickSortData,
+                    }, {
+                        label: 'Selection Sort',
+                        backgroundColor: 'rgba(99, 255, 132, 0.6)',
+                        data: selectionSortData,
+                    }
+                ]
+            }
+        });
+
+        this.getChartReverseData();
+        //console.log("bubblereverse", bubbleSortData);
+        this.setState({
+            chartDataReversed: {
+                labels: ['1,000', '2,000', '4,000', '5,000', '10,000', '40,000', '50,000'],
+                datasets: [
+                    {
+                        label: 'Bubble Sort',
+                        backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                        data: bubbleSortData,
+                    }, {
+                        label: 'Heap Sort',
+                        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                        data: heapSortData,
+                    }, {
+                        label: 'Insertion Sort',
+                        backgroundColor: 'rgba(255, 206, 86, 0.6)',
+                        data: insertionSortData,
+                    }, {
+                        label: 'Merge Sort',
+                        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                        data: mergeSortData,
+                    }, {
+                        label: 'Modified Quick Sort',
+                        backgroundColor: 'rgba(153, 102, 255, 0.6)',
+                        data: modifiedQuickSortData,
+                    }, {
+                        label: 'Quick Sort',
+                        backgroundColor: 'rgba(255, 159, 64, 0.6)',
+                        data: quickSortData,
+                    }, {
+                        label: 'Selection Sort',
+                        backgroundColor: 'rgba(99, 255, 132, 0.6)',
+                        data: selectionSortData,
+                    }
+                ]
+            }
+        });
+    }
+
+    comparisonPlot() {
+        this.disableButtons();
+        this.getAllData()
+        this.setState({ showGraphs: true })
+    }
 
     render() {
         const array = this.state.array;

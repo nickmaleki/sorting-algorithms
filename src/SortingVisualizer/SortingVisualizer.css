@@ -30,6 +30,10 @@
   border-bottom: none; /* Prevent double borders */
 }
 
+body.busy-cursor {
+  cursor: wait;
+}
+
 /* Add a background color on hover */
 /* .buttons button:hover {
   background-color: #3e8e41;

@@ -42,6 +42,16 @@ function arraysAreEqual(firstArray, secondArray) {
 }
 
 
-export function insertionSort(){
-    
+export function insertionSort(arr) {
+    arr.forEach((item, i) => {
+        let num = arr[i];
+        let j;
+
+        for (j = i - 1; j >= 0 && arr[j] > num; j--) {
+            arr[j + 1] = arr[j];
+        };
+        arr[j + 1] = num;
+    });
+
+    return arr;
 }
