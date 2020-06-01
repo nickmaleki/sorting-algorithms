@@ -220,7 +220,7 @@ class SortingVisualizer extends React.Component {
         buttonStyle = document.getElementById("comparisonPlot").style;
         document.getElementById("comparisonPlot").title = ENABLED_BUTTON.plotToolTip;
         buttonStyle.background = "#47535E";
-        buttonStyle.cursor = "progress";
+        buttonStyle.cursor = "pointer";
     }
 
 
@@ -348,7 +348,8 @@ class SortingVisualizer extends React.Component {
     }
 
     modQuickSort() {
-
+        this.disableButtons();
+        const [animations, sortArray] = getModifiedQuickSortAnimations(this.state.array);
     }
 
     quickSort() {
@@ -679,7 +680,8 @@ class SortingVisualizer extends React.Component {
     }
 
     comparisonPlot() {
-        this.disableButtons();
+        this.disableButtons()
+        this.render()
         this.getAllData()
         this.setState({ showGraphs: true })
     }

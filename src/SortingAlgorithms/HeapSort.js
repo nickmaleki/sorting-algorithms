@@ -38,7 +38,7 @@ function heap_root(input, i) {
         max = right;
     }
 
-    if (max != i) {
+    if (max !== i) {
         swap(input, i, max);
         heap_root(input, max);
     }
