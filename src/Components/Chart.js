@@ -35,7 +35,7 @@ class Chart extends Component {
                             yAxes: [{
                                 scaleLabel: {
                                     display: true,
-                                    labelString: 'Time to Execute (ms)'
+                                    labelString: 'Average Time to Execute (ms)'
                                 }
                             }],
                             xAxes: [{

@@ -29,7 +29,7 @@ function reportWindowSize() {
     NUMBER_OF_ARRAY_BARS = parseInt((WINDOW_WIDTH - 200) / 8);
 }
 window.onresize = reportWindowSize; //TBD -> find a way to update state also when resized
-
+document.title = "Sorting Algorithms";
 
 const PRIMARY_COLOR = 'dodgerblue'; //Normal color of bars
 const SECONDARY_COLOR = 'orangered'; //Color of bars when they are being compared
@@ -91,67 +91,67 @@ class SortingVisualizer extends React.Component {
         document.getElementById("arrayGen").disabled = true;
         let buttonStyle = document.getElementById("arrayGen").style;
         document.getElementById("arrayGen").title = DISABLED_BUTTON;
-        buttonStyle.cursor = "default";
+        buttonStyle.cursor = "wait";
         buttonStyle.background = "#000000";
 
         document.getElementById("sortArray").disabled = true;
         buttonStyle = document.getElementById("sortArray").style;
         document.getElementById("sortArray").title = DISABLED_BUTTON;
-        buttonStyle.cursor = "default";
+        buttonStyle.cursor = "wait";
         buttonStyle.background = "#000000";
 
         document.getElementById("reverseArray").disabled = true;
         buttonStyle = document.getElementById("reverseArray").style;
         document.getElementById("reverseArray").title = DISABLED_BUTTON;
-        buttonStyle.cursor = "default";
+        buttonStyle.cursor = "wait";
         buttonStyle.background = "#000000";
 
         document.getElementById("mergeSort").disabled = true;
         buttonStyle = document.getElementById("mergeSort").style;
         document.getElementById("mergeSort").title = DISABLED_BUTTON;
-        buttonStyle.cursor = "default";
+        buttonStyle.cursor = "wait";
         buttonStyle.background = "#000000";
 
         document.getElementById("quickSort").disabled = true;
         buttonStyle = document.getElementById("quickSort").style;
         document.getElementById("quickSort").title = DISABLED_BUTTON;
-        buttonStyle.cursor = "default";
+        buttonStyle.cursor = "wait";
         buttonStyle.background = "#000000";
 
         document.getElementById("insertionSort").disabled = true;
         buttonStyle = document.getElementById("insertionSort").style;
         document.getElementById("insertionSort").title = DISABLED_BUTTON;
-        buttonStyle.cursor = "default";
+        buttonStyle.cursor = "wait";
         buttonStyle.background = "#000000";
 
         document.getElementById("heapSort").disabled = true;
         buttonStyle = document.getElementById("heapSort").style;
         document.getElementById("heapSort").title = DISABLED_BUTTON;
-        buttonStyle.cursor = "default";
+        buttonStyle.cursor = "wait";
         buttonStyle.background = "#000000";
 
         document.getElementById("selectionSort").disabled = true;
         buttonStyle = document.getElementById("selectionSort").style;
         document.getElementById("selectionSort").title = DISABLED_BUTTON;
-        buttonStyle.cursor = "default";
+        buttonStyle.cursor = "wait";
         buttonStyle.background = "#000000";
 
         document.getElementById("bubbleSort").disabled = true;
         buttonStyle = document.getElementById("bubbleSort").style;
         document.getElementById("bubbleSort").title = DISABLED_BUTTON;
-        buttonStyle.cursor = "default";
+        buttonStyle.cursor = "wait";
         buttonStyle.background = "#000000";
 
         document.getElementById("modQuickSort").disabled = true;
         buttonStyle = document.getElementById("modQuickSort").style;
         document.getElementById("modQuickSort").title = DISABLED_BUTTON;
-        buttonStyle.cursor = "default";
+        buttonStyle.cursor = "wait";
         buttonStyle.background = "#000000";
 
         document.getElementById("comparisonPlot").disabled = true;
         buttonStyle = document.getElementById("comparisonPlot").style;
         document.getElementById("comparisonPlot").title = DISABLED_BUTTON;
-        buttonStyle.cursor = "progress";
+        buttonStyle.cursor = "wait";
         buttonStyle.background = "#000000";
     }
 
@@ -312,7 +312,7 @@ class SortingVisualizer extends React.Component {
             }
         }
         // this.setState({array: sortArray})
-        const RESTORE_TIME = parseInt(ANIMATION_SPEED_MS * animations.length / 2 + 3000);
+        const RESTORE_TIME = parseInt(ANIMATION_SPEED_MS * animations.length);
         setTimeout(() => this.restoreButtons(), RESTORE_TIME);
     }
 
@@ -425,40 +425,69 @@ class SortingVisualizer extends React.Component {
         for (var index = 0; index < arraySizes.length; ++index) { //Iterate through each array size
             array = [];
             for (let i = 0; i < arraySizes[index]; i++) { array.push(Math.random()); } //Generate an array based on the current array size
-            t0 = performance.now();
-            bubbleSort(array.slice());
-            t1 = performance.now();
-            bubbleSortData.push(t1 - t0);
+            var tmp = []
+            for (let i = 0; i < (arraySizes.length - index); i++) {
+                t0 = performance.now();
+                bubbleSort(array.slice());
+                t1 = performance.now();
+                tmp.push(t1 - t0)
+            }
+            bubbleSortData.push(average(tmp));
 
-            t0 = performance.now();
-            heapSort(array.slice());
-            t1 = performance.now();
-            heapSortData.push(t1 - t0);
 
-            t0 = performance.now();
-            insertionSort(array.slice());
-            t1 = performance.now();
-            insertionSortData.push(t1 - t0);
+            tmp = []
+            for (let i = 0; i < (arraySizes.length - index); i++) {
+                t0 = performance.now();
+                heapSort(array.slice());
+                t1 = performance.now();
+                tmp.push(t1 - t0)
+            }
+            heapSortData.push(average(tmp));
 
-            t0 = performance.now();
-            mergeSort(array.slice());
-            t1 = performance.now();
-            mergeSortData.push(t1 - t0);
+            tmp = []
+            for (let i = 0; i < (arraySizes.length - index); i++) {
+                t0 = performance.now();
+                insertionSort(array.slice());
+                t1 = performance.now();
+                tmp.push(t1 - t0)
+            }
+            insertionSortData.push(average(tmp));
 
-            t0 = performance.now();
-            modifiedQuickSort(array.slice());
-            t1 = performance.now();
-            modifiedQuickSortData.push(t1 - t0);
+            tmp = []
+            for (let i = 0; i < (arraySizes.length - index); i++) {
+                t0 = performance.now();
+                mergeSort(array.slice());
+                t1 = performance.now();
+                tmp.push(t1 - t0)
+            }
+            mergeSortData.push(average(tmp));
 
-            t0 = performance.now();
-            quickSort(array.slice());
-            t1 = performance.now();
-            quickSortData.push(t1 - t0);
+            tmp = []
+            for (let i = 0; i < (arraySizes.length - index); i++) {
+                t0 = performance.now();
+                modifiedQuickSort(array.slice());
+                t1 = performance.now();
+                tmp.push(t1 - t0)
+            }
+            modifiedQuickSortData.push(average(tmp));
 
-            t0 = performance.now();
-            selectionSort(array.slice());
-            t1 = performance.now();
-            selectionSortData.push(t1 - t0);
+            tmp = []
+            for (let i = 0; i < (arraySizes.length - index); i++) {
+                t0 = performance.now();
+                quickSort(array.slice());
+                t1 = performance.now();
+                tmp.push(t1 - t0)
+            }
+            quickSortData.push(average(tmp));
+
+            tmp = []
+            for (let i = 0; i < (arraySizes.length - index); i++) {
+                t0 = performance.now();
+                selectionSort(array.slice());
+                t1 = performance.now();
+                tmp.push(t1 - t0)
+            }
+            selectionSortData.push(average(tmp));
         }
     }
     getChartSortedData() {
@@ -470,40 +499,69 @@ class SortingVisualizer extends React.Component {
             array = [];
             for (let i = 0; i < arraySizes[index]; i++) { array.push(Math.random()); } //Generate an array based on the current array size
             array.sort((a, b) => a - b); //Adjusted sort function because sort w/o args uses string comparison, not number
-            t0 = performance.now();
-            bubbleSort(array.slice());
-            t1 = performance.now();
-            bubbleSortData.push(t1 - t0);
+            var tmp = []
+            for (let i = 0; i < (arraySizes.length - index); i++) {
+                t0 = performance.now();
+                bubbleSort(array.slice());
+                t1 = performance.now();
+                tmp.push(t1 - t0)
+            }
+            bubbleSortData.push(average(tmp));
 
-            t0 = performance.now();
-            heapSort(array.slice());
-            t1 = performance.now();
-            heapSortData.push(t1 - t0);
 
-            t0 = performance.now();
-            insertionSort(array.slice());
-            t1 = performance.now();
-            insertionSortData.push(t1 - t0);
+            tmp = []
+            for (let i = 0; i < (arraySizes.length - index); i++) {
+                t0 = performance.now();
+                heapSort(array.slice());
+                t1 = performance.now();
+                tmp.push(t1 - t0)
+            }
+            heapSortData.push(average(tmp));
 
-            t0 = performance.now();
-            mergeSort(array.slice());
-            t1 = performance.now();
-            mergeSortData.push(t1 - t0);
+            tmp = []
+            for (let i = 0; i < (arraySizes.length - index); i++) {
+                t0 = performance.now();
+                insertionSort(array.slice());
+                t1 = performance.now();
+                tmp.push(t1 - t0)
+            }
+            insertionSortData.push(average(tmp));
 
-            t0 = performance.now();
-            modifiedQuickSort(array.slice());
-            t1 = performance.now();
-            modifiedQuickSortData.push(t1 - t0);
+            tmp = []
+            for (let i = 0; i < (arraySizes.length - index); i++) {
+                t0 = performance.now();
+                mergeSort(array.slice());
+                t1 = performance.now();
+                tmp.push(t1 - t0)
+            }
+            mergeSortData.push(average(tmp));
 
-            t0 = performance.now();
-            quickSort(array.slice());
-            t1 = performance.now();
-            quickSortData.push(t1 - t0);
+            tmp = []
+            for (let i = 0; i < (arraySizes.length - index); i++) {
+                t0 = performance.now();
+                modifiedQuickSort(array.slice());
+                t1 = performance.now();
+                tmp.push(t1 - t0)
+            }
+            modifiedQuickSortData.push(average(tmp));
 
-            t0 = performance.now();
-            selectionSort(array.slice());
-            t1 = performance.now();
-            selectionSortData.push(t1 - t0);
+            tmp = []
+            for (let i = 0; i < (arraySizes.length - index); i++) {
+                t0 = performance.now();
+                quickSort(array.slice());
+                t1 = performance.now();
+                tmp.push(t1 - t0)
+            }
+            quickSortData.push(average(tmp));
+
+            tmp = []
+            for (let i = 0; i < (arraySizes.length - index); i++) {
+                t0 = performance.now();
+                selectionSort(array.slice());
+                t1 = performance.now();
+                tmp.push(t1 - t0)
+            }
+            selectionSortData.push(average(tmp));
         }
     }
     getChartReverseData() {
@@ -515,40 +573,70 @@ class SortingVisualizer extends React.Component {
             array = [];
             for (let i = 0; i < arraySizes[index]; i++) { array.push(Math.random()); } //Generate an array based on the current array size
             array.sort((a, b) => a - b).reverse();
-            t0 = performance.now();
-            bubbleSort(array.slice());
-            t1 = performance.now();
-            bubbleSortData.push(t1 - t0);
 
-            t0 = performance.now();
-            heapSort(array.slice());
-            t1 = performance.now();
-            heapSortData.push(t1 - t0);
+            var tmp = []
+            for (let i = 0; i < (arraySizes.length - index); i++) {
+                t0 = performance.now();
+                bubbleSort(array.slice());
+                t1 = performance.now();
+                tmp.push(t1 - t0)
+            }
+            bubbleSortData.push(average(tmp));
 
-            t0 = performance.now();
-            insertionSort(array.slice());
-            t1 = performance.now();
-            insertionSortData.push(t1 - t0);
 
-            t0 = performance.now();
-            mergeSort(array.slice());
-            t1 = performance.now();
-            mergeSortData.push(t1 - t0);
+            tmp = []
+            for (let i = 0; i < (arraySizes.length - index); i++) {
+                t0 = performance.now();
+                heapSort(array.slice());
+                t1 = performance.now();
+                tmp.push(t1 - t0)
+            }
+            heapSortData.push(average(tmp));
 
-            t0 = performance.now();
-            modifiedQuickSort(array.slice());
-            t1 = performance.now();
-            modifiedQuickSortData.push(t1 - t0);
+            tmp = []
+            for (let i = 0; i < (arraySizes.length - index); i++) {
+                t0 = performance.now();
+                insertionSort(array.slice());
+                t1 = performance.now();
+                tmp.push(t1 - t0)
+            }
+            insertionSortData.push(average(tmp));
 
-            t0 = performance.now();
-            quickSort(array.slice());
-            t1 = performance.now();
-            quickSortData.push(t1 - t0);
+            tmp = []
+            for (let i = 0; i < (arraySizes.length - index); i++) {
+                t0 = performance.now();
+                mergeSort(array.slice());
+                t1 = performance.now();
+                tmp.push(t1 - t0)
+            }
+            mergeSortData.push(average(tmp));
 
-            t0 = performance.now();
-            selectionSort(array.slice());
-            t1 = performance.now();
-            selectionSortData.push(t1 - t0);
+            tmp = []
+            for (let i = 0; i < (arraySizes.length - index); i++) {
+                t0 = performance.now();
+                modifiedQuickSort(array.slice());
+                t1 = performance.now();
+                tmp.push(t1 - t0)
+            }
+            modifiedQuickSortData.push(average(tmp));
+
+            tmp = []
+            for (let i = 0; i < (arraySizes.length - index); i++) {
+                t0 = performance.now();
+                quickSort(array.slice());
+                t1 = performance.now();
+                tmp.push(t1 - t0)
+            }
+            quickSortData.push(average(tmp));
+
+            tmp = []
+            for (let i = 0; i < (arraySizes.length - index); i++) {
+                t0 = performance.now();
+                selectionSort(array.slice());
+                t1 = performance.now();
+                tmp.push(t1 - t0)
+            }
+            selectionSortData.push(average(tmp));
         }
     }
     resetData() {
@@ -682,7 +770,9 @@ class SortingVisualizer extends React.Component {
     comparisonPlot() {
         this.disableButtons()
         this.render()
+        alert("This will take about 1 minute to complete, if your browser asks you to Wait please allow it. ");
         this.getAllData()
+        document.title = "Time Complexity Analysis";
         this.setState({ showGraphs: true })
     }
 
@@ -753,7 +843,7 @@ class SortingVisualizer extends React.Component {
                             Selection Sort
                     </button>
                         <button title="Compare all algorithms for different input sizes" id="comparisonPlot" style={{ position: 'relative', top: `${1.0 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.comparisonPlot()}>
-                            Comparison Plot
+                            Time Complexity Analysis
                     </button>
 
                     </div>
@@ -765,8 +855,6 @@ class SortingVisualizer extends React.Component {
 }
 
 // From https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript
-function randomIntFromInterval(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min); //min max inclusive
-}
-
+function randomIntFromInterval(min, max) { return Math.floor(Math.random() * (max - min + 1) + min); }//min max inclusive
+const average = arr => arr.reduce((sume, el) => sume + el, 0) / arr.length;
 export default SortingVisualizer;
