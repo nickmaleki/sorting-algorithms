@@ -33,7 +33,7 @@ document.title = "Sorting Algorithms";
 
 const PRIMARY_COLOR = 'dodgerblue'; //Normal color of bars
 const SECONDARY_COLOR = 'orangered'; //Color of bars when they are being compared
-const ANIMATION_SPEED_MS = 1; //Animation Speed (how fast color changes, how fast height gets overwritten)
+const ANIMATION_SPEED_MS = 5; //Animation Speed (how fast color changes, how fast height gets overwritten)
 
 //Tooltips for buttons
 const DISABLED_BUTTON = "Currently Disabled"
@@ -243,7 +243,7 @@ class SortingVisualizer extends React.Component {
                 setTimeout(() => {
                     barOneStyle.backgroundColor = color;
                     barTwoStyle.backgroundColor = color;
-                }, i * ANIMATION_SPEED_MS * 0.5);
+                }, i * ANIMATION_SPEED_MS);
             }
             else {
                 const [barIndex, newHeight] = animations[i];
@@ -253,43 +253,41 @@ class SortingVisualizer extends React.Component {
                 const barStyle = arrayBars[barIndex].style;
                 setTimeout(() => {
                     barStyle.height = `${newHeight}px`;
-                }, i * ANIMATION_SPEED_MS * 0.5);
+                }, i * ANIMATION_SPEED_MS);
             }
         }
         // this.setState({array: sortArray})
         const RESTORE_TIME = parseInt(ANIMATION_SPEED_MS * animations.length / 2 + 3000);
         setTimeout(() => this.restoreButtons(), RESTORE_TIME);
+        setTimeout(() => this.setState({ array: sortArray }), RESTORE_TIME);
     }
 
     heapSort() {
         this.disableButtons();
         const [animations, sortArray] = getHeapSortAnimations(this.state.array);
-        // for (let i = 0; i < animations.length; i++) {
-        //     const isColorChange = (animations[i][0] === "comparision1") || (animations[i][0] === "comparision2");
-        //     const arrayBars = document.getElementsByClassName('array-bar');
-        //     if (isColorChange === true) {
-        //         const color = (animations[i][0] === "comparision1") ? SECONDARY_COLOR : PRIMARY_COLOR;
-        //         const [temp, barOneIndex, barTwoIndex] = animations[i];
-        //         const barOneStyle = arrayBars[barOneIndex].style;
-        //         const barTwoStyle = arrayBars[barTwoIndex].style;
-        //         setTimeout(() => {
-        //             barOneStyle.backgroundColor = color;
-        //             barTwoStyle.backgroundColor = color;
-        //         }, i * ANIMATION_SPEED_MS);
-        //     }
-        //     else {
-        //         const [temp, barIndex, newHeight] = animations[i];
-        //         const barStyle = arrayBars[barIndex].style;
-        //         setTimeout(() => {
-        //             barStyle.height = `${newHeight}px`;
-        //         }, i * ANIMATION_SPEED_MS);
-        //     }
-        // }
-        // // this.setState({array: sortArray})
-        // const RESTORE_TIME = parseInt(ANIMATION_SPEED_MS * animations.length / 2 + 3000);
-        // setTimeout(() => this.restoreButtons(), RESTORE_TIME);
+        for (let i = 0; i < animations.length; i++) {
+            const arrayBars = document.getElementsByClassName('array-bar');
+            const [type, barOneIndex, barTwoIndex] = animations[i];
+            const barOneStyle = arrayBars[barOneIndex].style;
+            const barTwoStyle = arrayBars[barTwoIndex].style;
+            setTimeout(() => {
+                barOneStyle.backgroundColor = SECONDARY_COLOR;
+                barTwoStyle.backgroundColor = SECONDARY_COLOR;
+            }, (i * (ANIMATION_SPEED_MS) * 3) - (ANIMATION_SPEED_MS * 2));
+            setTimeout(() => {
+                let newHeight = barTwoStyle.height
+                barTwoStyle.height = barOneStyle.height
+                barOneStyle.height = newHeight
+            },  (i * (ANIMATION_SPEED_MS) * 3) - (ANIMATION_SPEED_MS * 1));
+            setTimeout(() => {
+                barOneStyle.backgroundColor = PRIMARY_COLOR;
+                barTwoStyle.backgroundColor = PRIMARY_COLOR;
+            }, (i * (ANIMATION_SPEED_MS) * 3) - (ANIMATION_SPEED_MS * 0)); 
+        }
+        const RESTORE_TIME = parseInt(ANIMATION_SPEED_MS * animations.length * 3 + 3000);
+        setTimeout(() => this.restoreButtons(), RESTORE_TIME);
+        setTimeout(() => this.setState({ array: sortArray }), RESTORE_TIME);
     }
-
 
     insertionSort() {
         this.disableButtons();
@@ -318,6 +316,7 @@ class SortingVisualizer extends React.Component {
         // this.setState({array: sortArray})
         const RESTORE_TIME = parseInt(ANIMATION_SPEED_MS * animations.length);
         setTimeout(() => this.restoreButtons(), RESTORE_TIME);
+        setTimeout(() => this.setState({ array: sortArray }), RESTORE_TIME);
     }
 
     mergeSort() {
@@ -349,11 +348,16 @@ class SortingVisualizer extends React.Component {
         // this.setState({array: sortArray})
         const RESTORE_TIME = parseInt(ANIMATION_SPEED_MS * animations.length / 2 + 3000);
         setTimeout(() => this.restoreButtons(), RESTORE_TIME);
+        setTimeout(() => this.setState({ array: sortArray }), RESTORE_TIME);
     }
 
     modQuickSort() {
         this.disableButtons();
         const [animations, sortArray] = getModifiedQuickSortAnimations(this.state.array);
+
+        const RESTORE_TIME = parseInt(ANIMATION_SPEED_MS * animations.length / 2 + 3000);
+        setTimeout(() => this.restoreButtons(), RESTORE_TIME);
+        setTimeout(() => this.setState({ array: sortArray }), RESTORE_TIME);
     }
 
     quickSort() {
@@ -389,6 +393,8 @@ class SortingVisualizer extends React.Component {
         // this.setState({array: sortArray})
         const RESTORE_TIME = parseInt(ANIMATION_SPEED_MS * animations.length / 2 + 3000);
         setTimeout(() => this.restoreButtons(), RESTORE_TIME);
+        setTimeout(() => this.setState({ array: sortArray }), RESTORE_TIME);
+
     }
 
     selectionSort() {
@@ -418,6 +424,7 @@ class SortingVisualizer extends React.Component {
         // this.setState({array: sortArray})
         const RESTORE_TIME = parseInt(ANIMATION_SPEED_MS * animations.length / 2 + 3000);
         setTimeout(() => this.restoreButtons(), RESTORE_TIME);
+        setTimeout(() => this.setState({ array: sortArray }), RESTORE_TIME);
     }
 
 

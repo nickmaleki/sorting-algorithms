@@ -11,20 +11,44 @@ export function getHeapSortAnimations(array) {
 
 var array_length;
 
-function animatedHeapSort(auxillaryArray, animation) {
+//Used in animation creation
+function animatedHeapSort(auxillaryArray, animations) {
     array_length = auxillaryArray.length;
 
     for (var i = Math.floor(array_length / 2); i >= 0; i -= 1) {
-        heap_root(auxillaryArray, i);
+        heapify(auxillaryArray, i, animations);
     }
 
     for (i = auxillaryArray.length - 1; i > 0; i--) {
         swap(auxillaryArray, 0, i);
         array_length--;
-        heap_root(auxillaryArray, 0);
+        animations.push(["swap", 0, i]);
+        heapify(auxillaryArray, 0, animations);
+    }
+}
+//Used in animation creation
+function heapify(input, i, animations) {
+    var left = 2 * i + 1;
+    var right = 2 * i + 2;
+    var max = i;
+
+    if (left < array_length && input[left] > input[max]) {
+        max = left;
+    }
+
+    if (right < array_length && input[right] > input[max]) {
+        max = right;
+    }
+
+    if (max !== i) {
+        swap(input, i, max);
+        animations.push(["swap", i, max]);
+        heapify(input, max, animations);
     }
 }
 
+
+//Used in Time Complexity Analysis
 function heap_root(input, i) {
     var left = 2 * i + 1;
     var right = 2 * i + 2;
@@ -41,28 +65,10 @@ function heap_root(input, i) {
     if (max !== i) {
         swap(input, i, max);
         heap_root(input, max);
+
     }
 }
-
-function swap(input, index_A, index_B) {
-    var temp = input[index_A];
-
-    input[index_A] = input[index_B];
-    input[index_B] = temp;
-}
-
-function arraysAreEqual(firstArray, secondArray) {
-    if (firstArray.length !== secondArray.length) {
-        return false;
-    }
-    for (let i = 0; i < firstArray.length; i++) {
-        if (firstArray[i] !== secondArray[i]) {
-            return false;
-        }
-    }
-    return true;
-}
-
+//Used in Time Complexity Analysis
 export function heapSort(auxillaryArray){
     array_length = auxillaryArray.length;
 
@@ -76,3 +82,23 @@ export function heapSort(auxillaryArray){
         heap_root(auxillaryArray, 0);
     }
 }
+//Shared
+function swap(input, index_A, index_B) {
+    var temp = input[index_A];
+
+    input[index_A] = input[index_B];
+    input[index_B] = temp;
+}
+//Used in final array equal check
+function arraysAreEqual(firstArray, secondArray) {
+    if (firstArray.length !== secondArray.length) {
+        return false;
+    }
+    for (let i = 0; i < firstArray.length; i++) {
+        if (firstArray[i] !== secondArray[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
