@@ -33,7 +33,7 @@ document.title = "Sorting Algorithms";
 
 const PRIMARY_COLOR = 'dodgerblue'; //Normal color of bars
 const SECONDARY_COLOR = 'orangered'; //Color of bars when they are being compared
-const ANIMATION_SPEED_MS = 5; //Animation Speed (how fast color changes, how fast height gets overwritten)
+const ANIMATION_SPEED_MS = 1; //Animation Speed (how fast color changes, how fast height gets overwritten)
 
 //Tooltips for buttons
 const DISABLED_BUTTON = "Currently Disabled"
@@ -278,13 +278,13 @@ class SortingVisualizer extends React.Component {
                 let newHeight = barTwoStyle.height
                 barTwoStyle.height = barOneStyle.height
                 barOneStyle.height = newHeight
-            },  (i * (ANIMATION_SPEED_MS) * 3) - (ANIMATION_SPEED_MS * 1));
+            }, (i * (ANIMATION_SPEED_MS) * 3) - (ANIMATION_SPEED_MS * 1));
             setTimeout(() => {
                 barOneStyle.backgroundColor = PRIMARY_COLOR;
                 barTwoStyle.backgroundColor = PRIMARY_COLOR;
-            }, (i * (ANIMATION_SPEED_MS) * 3) - (ANIMATION_SPEED_MS * 0)); 
+            }, (i * (ANIMATION_SPEED_MS) * 3) - (ANIMATION_SPEED_MS * 0));
         }
-        const RESTORE_TIME = parseInt(ANIMATION_SPEED_MS * animations.length * 3 + 3000);
+        const RESTORE_TIME = parseInt(ANIMATION_SPEED_MS * animations.length * 3);
         setTimeout(() => this.restoreButtons(), RESTORE_TIME);
         setTimeout(() => this.setState({ array: sortArray }), RESTORE_TIME);
     }
@@ -416,7 +416,6 @@ class SortingVisualizer extends React.Component {
                 }, i * ANIMATION_SPEED_MS);
             }
         }
-        // this.setState({array: sortArray})
         const RESTORE_TIME = parseInt(ANIMATION_SPEED_MS * animations.length / 2 + 3000);
         setTimeout(() => this.restoreButtons(), RESTORE_TIME);
         setTimeout(() => this.setState({ array: sortArray }), RESTORE_TIME);
@@ -858,25 +857,25 @@ class SortingVisualizer extends React.Component {
                         <button title="Generates a new reversed array" id="reverseArray" style={{ position: 'relative', top: `${0 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.reverseArray()}>
                             Generate a Sorted Reversed Array
                     </button>
+                    <button title="Ω(n log(n)), θ(n log(n)), O(n log(n))" id="mergeSort" style={{ position: 'relative', top: `${0.5 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.mergeSort()}>
+                            Merge Sort
+                    </button>
+                    <button title="Ω(n log(n)), θ(n log(n)), O(n^2)" id="quickSort" style={{ position: 'relative', top: `${0.5 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.quickSort()}>
+                            Quick Sort
+                    </button>
+                    <button title="Ω(n log(n)), θ(n log(n)), O(n log(n))" id="heapSort" style={{ position: 'relative', top: `${0.5 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.heapSort()}>
+                            Heap Sort
+                    </button>
+                    <button title="Ω(n log(n)), θ(n log(n)), O(n^2)" id="modQuickSort" style={{ position: 'relative', top: `${0.5 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.modQuickSort()}>
+                            Modified Quick Sort
+                    </button>
+                    <button title="Ω(n), θ(n^2), O(n^2)" id="insertionSort" style={{ position: 'relative', top: `${0.5 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.insertionSort()}>
+                            Insertion Sort
+                    </button>
                         <button title="Ω(n), θ(n^2), O(n^2)" id="bubbleSort" style={{ position: 'relative', top: `${0.5 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.bubbleSort()}>
                             Bubble Sort
                     </button>
-                        <button title="Ω(n log(n)), θ(n log(n)), O(n log(n))" id="heapSort" style={{ position: 'relative', top: `${0.5 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.heapSort()}>
-                            Heap Sort
-                    </button>
-                        <button title="Ω(n), θ(n^2), O(n^2)" id="insertionSort" style={{ position: 'relative', top: `${0.5 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.insertionSort()}>
-                            Insertion Sort
-                    </button>
-                        <button title="Ω(n log(n)), θ(n log(n)), O(n log(n))" id="mergeSort" style={{ position: 'relative', top: `${0.5 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.mergeSort()}>
-                            Merge Sort
-                    </button>
-                        <button title="Ω(n log(n)), θ(n log(n)), O(n^2)" id="modQuickSort" style={{ position: 'relative', top: `${0.5 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.modQuickSort()}>
-                            Modified Quick Sort
-                    </button>
-                        <button title="Ω(n log(n)), θ(n log(n)), O(n^2)" id="quickSort" style={{ position: 'relative', top: `${0.5 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.quickSort()}>
-                            Quick Sort
-                    </button>
-                        <button title="Ω(n^2), θ(n^2), O(n^2)" id="selectionSort" style={{ position: 'relative', top: `${0.5 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.selectionSort()}>
+                    <button title="Ω(n^2), θ(n^2), O(n^2)" id="selectionSort" style={{ position: 'relative', top: `${0.5 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.selectionSort()}>
                             Selection Sort
                     </button>
                         <button title="Compare all algorithms for different input sizes" id="comparisonPlot" style={{ position: 'relative', top: `${1.0 * (WINDOW_HEIGHT - 20) / TOTAL_BUTTONS}px` }} onClick={() => this.comparisonPlot()}>

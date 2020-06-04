@@ -1,13 +1,10 @@
 //Use median-of-three as pivot. For small sub-problem of size ≤ 10, use insertion sort.
-//import { insertionSort } from '../SortingAlgorithms/InsertionSort';
-
 export function getModifiedQuickSortAnimations(array) {
     let animations = [];
     let auxillaryArray = array.slice();
-    animatedModifiedQuickSort(auxillaryArray, animations);
-    auxillaryArray.pop();
+    animatedModifiedQuickSort(auxillaryArray, 0, auxillaryArray.length - 1, animations);
     const javaScriptSortedArray = array.slice().sort((a, b) => a - b);
-    console.log("Modified quick sort works correctly? ", arraysAreEqual(javaScriptSortedArray, auxillaryArray));
+    console.log("Quick sort works correctly? ", arraysAreEqual(javaScriptSortedArray, auxillaryArray));
     array = auxillaryArray;
     return [animations, array];
 }
