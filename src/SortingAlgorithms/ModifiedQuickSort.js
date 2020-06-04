@@ -14,41 +14,51 @@ export function getModifiedQuickSortAnimations(array) {
 
 const CUTOFF = 10;
 
-export function animatedModifiedQuickSort(a, low = 0, high = a.length) {
-    if (low + CUTOFF <= high){
-        // Sort low, middle, high
-        let middle = Math.floor((low + high) / 2);
-        if (a[middle] < a[low])
-            swapReferences(a, low, middle);
-        if (a[high] < a[low])
-            swapReferences(a, low, high);
-        if (a[high] < a[middle])
-            swapReferences(a, middle, high);
-
-        // Place pivot at position high - 1
-        swapReferences(a, middle, high - 1);
-        let pivot = a[high - 1];
-
-        // Begin partitioning
-        let i, j;
-        for (i = low, j = high - 1; ;) {
-            while (a[++i] < pivot);
-            while (pivot < a[--j]);
-            if (i < j)
-                swapReferences(a, i, j);
-            else break;
-        }
-        // Restore pivot
-        swapReferences(a, i, high - 1);
-
-        modifiedQuickSort(a, low, i - 1);    // Sort small elements
-        modifiedQuickSort(a, i + 1, high);   // Sort large elements
-    } else { 
-        insertionSort(a, low, high);
+function animatedModifiedQuickSort(auxillaryArray, startIndex, endIndex, animations) {
+    let pivotIndex;
+    if (startIndex < endIndex) {
+        pivotIndex = partitionArray(auxillaryArray, startIndex, endIndex, animations);
+        animatedQuickSort(auxillaryArray, startIndex, pivotIndex - 1, animations);
+        animatedQuickSort(auxillaryArray, pivotIndex + 1, endIndex, animations);
     }
 }
 
+function partitionArray(auxillaryArray, startIndex, endIndex, animations) {
+    let pivot = auxillaryArray[endIndex];
+    let pivotIndex = startIndex;
+    for (let i = startIndex; i <= endIndex - 1; i++) {
+        animations.push([i, endIndex]);
+        animations.push([i, endIndex]);
+        if (auxillaryArray[i] <= pivot) {
+            //Swap these two heights
+            animations.push([i, auxillaryArray[pivotIndex]]);
+            animations.push([pivotIndex, auxillaryArray[i]]);
+            swap(auxillaryArray, i, pivotIndex);
+            pivotIndex++;
+        }
+        else {
+            animations.push([-1, -1]);
+            animations.push([-1, -1]);
+        }
+        animations.push([-1, -1]);
+        animations.push([-1, -1]);
+    }
+    animations.push([-1, -1]);
+    animations.push([-1, -1]);
+    animations.push([-1, -1]);
+    animations.push([-1, -1]);
+    //Swap these two heights
+    animations.push([pivotIndex, auxillaryArray[endIndex]]);
+    animations.push([endIndex, auxillaryArray[pivotIndex]]);
+    swap(auxillaryArray, pivotIndex, endIndex);
+    return pivotIndex;
+}
 
+function swap(auxillaryArray, firstIndex, secondIndex) {
+    let temp = auxillaryArray[firstIndex];
+    auxillaryArray[firstIndex] = auxillaryArray[secondIndex];
+    auxillaryArray[secondIndex] = temp;
+}
 
 
 export function modifiedQuickSort(a, low = 0, high = a.length) {
