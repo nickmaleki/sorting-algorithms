@@ -18,8 +18,8 @@ function animatedModifiedQuickSort(auxillaryArray, startIndex, endIndex, animati
     let pivotIndex;
     if (startIndex < endIndex) {
         pivotIndex = partitionArray(auxillaryArray, startIndex, endIndex, animations);
-        animatedQuickSort(auxillaryArray, startIndex, pivotIndex - 1, animations);
-        animatedQuickSort(auxillaryArray, pivotIndex + 1, endIndex, animations);
+        animatedModifiedQuickSort(auxillaryArray, startIndex, pivotIndex - 1, animations);
+        animatedModifiedQuickSort(auxillaryArray, pivotIndex + 1, endIndex, animations);
     }
 }
 

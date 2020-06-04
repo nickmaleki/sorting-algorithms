@@ -354,7 +354,33 @@ class SortingVisualizer extends React.Component {
     modQuickSort() {
         this.disableButtons();
         const [animations, sortArray] = getModifiedQuickSortAnimations(this.state.array);
-
+        for (let i = 0; i < animations.length - 1; i++) {
+            const isColorChange = (i % 6 === 0) || (i % 6 === 1);
+            const arrayBars = document.getElementsByClassName('array-bar');
+            if (isColorChange === true) {
+                const color = (i % 6 === 0) ? SECONDARY_COLOR : PRIMARY_COLOR;
+                const [barOneIndex, barTwoIndex] = animations[i];
+                if (barOneIndex === -1) {
+                    continue;
+                }
+                const barOneStyle = arrayBars[barOneIndex].style;
+                const barTwoStyle = arrayBars[barTwoIndex].style;
+                setTimeout(() => {
+                    barOneStyle.backgroundColor = color;
+                    barTwoStyle.backgroundColor = color;
+                }, i * ANIMATION_SPEED_MS);
+            }
+            else {
+                const [barIndex, newHeight] = animations[i];
+                if (barIndex === -1) {
+                    continue;
+                }
+                const barStyle = arrayBars[barIndex].style;
+                setTimeout(() => {
+                    barStyle.height = `${newHeight}px`;
+                }, i * ANIMATION_SPEED_MS);
+            }
+        }
         const RESTORE_TIME = parseInt(ANIMATION_SPEED_MS * animations.length / 2 + 3000);
         setTimeout(() => this.restoreButtons(), RESTORE_TIME);
         setTimeout(() => this.setState({ array: sortArray }), RESTORE_TIME);
