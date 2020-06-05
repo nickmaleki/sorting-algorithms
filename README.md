@@ -1,10 +1,10 @@
-## Sorting Algorithm Visualizer
+# Sorting Algorithm Visualizer
 This project is a web app that runs Bubble Sort, Heap Sort, Insertion Sort, Merge Sort, Modified Quick Sort, In-Place Quick Sort, and Selection Sort. 
 You can view the completed project [here](https://nickmaleki.com/sorting-algorithms).
 To view the time complexity analysis, click the "Time Complexity Analysis" button and wait about a minute for the analysis to complete. 
 
 
-# React Info
+## React Info
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 In the project directory, you can run:
 `npm start`
