@@ -29,7 +29,6 @@ function reportWindowSize() {
     NUMBER_OF_ARRAY_BARS = parseInt((WINDOW_WIDTH - 200) / 8);
 }
 window.onresize = reportWindowSize; //TBD -> find a way to update state also when resized
-document.title = "Sorting Algorithms";
 
 const PRIMARY_COLOR = 'dodgerblue'; //Normal color of bars
 const SECONDARY_COLOR = 'orangered'; //Color of bars when they are being compared
